@@ -30,9 +30,9 @@ namespace ClimbingShoebox
             
             services.AddControllersWithViews();
 
-            services.AddScoped<ICategoryRepository, MockCategoryRepository>();
-            services.AddScoped<IShoeRepository, MockShoeRepository>();
-            services.AddScoped<IBrandRepository, MockBrandRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IShoeRepository, ShoeRepository>();
+            services.AddScoped<IBrandRepository, BrandRepository>();
 
         }
 

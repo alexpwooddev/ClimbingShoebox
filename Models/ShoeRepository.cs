@@ -33,7 +33,7 @@ namespace ClimbingShoebox.Models
 
         public Shoe GetShoebyId(int shoeId)
         {
-            
+            return appDbContext.Shoes.FirstOrDefault(s => s.ShoeId == shoeId);
         }
     }
 }
