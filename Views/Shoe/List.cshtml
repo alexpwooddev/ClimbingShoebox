@@ -1,0 +1,17 @@
+﻿@model ShoesListViewModel
+
+<h1>All Climbing Shoes</h1>
+
+@foreach (var shoe in Model.Shoes)
+{
+    <div class="col-sm-4 col-lg-4 col-md-4">
+        <div class="img-thumbnail">
+            <img class="img-thumbnail" src="@shoe.ImageThumbnailUrl" alt="" />
+            <div class="figure-caption">
+                <h3>@shoe.Price.ToString("c")</h3>
+                <h3>@shoe.Name</h3>
+                <p>@shoe.ShortDescription</p>
+            </div>
+        </div>
+    </div>
+}
