@@ -6,15 +6,14 @@
 
 <h2>@Model.Name</h2>
 
-<div class="img-thumbnail">
-    <img alt="@Model.Name" src="@Model.ImageUrl" />
-    <div class="figure-caption">
-        <h3>@Model.Price</h3>
-        <h3>
+<div class="card">
+    <img class="card-img-top" alt="@Model.Name" src="@Model.ImageUrl" />
+    <div class="card-body">
+        <h3 class="card-subtitle">@Model.Price</h3>
+        <h3 class="card-title">
             <a href="#">@Model.Name</a>
         </h3>
-        <h4>@Model.ShortDescription</h4>
-        <p>@Model.LongDescription</p>
+        <p class="card-text">@Model.LongDescription</p>
     </div>
     <div>
         <p class="btn">

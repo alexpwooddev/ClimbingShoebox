@@ -2,12 +2,17 @@
 @{
     ViewData["Title"] = "Home";
 }
-
-
-<partial name="_Carousel" />
-<br /><br />
+<br />
 <h1>Welcome to Climbing Shoebox</h1>
+<br />
+<partial name="_Carousel" />
+
+<br />
+<br />
 <hr />
+<br />
 <h2>Check out this week's featured shoe:</h2>
 
-<partial name="_ShoeCard" model="@Model.FeaturedShoe" />
+<div class="featureShoeCard">
+    <partial name="_ShoeCard" model="@Model.FeaturedShoe" />
+</div>

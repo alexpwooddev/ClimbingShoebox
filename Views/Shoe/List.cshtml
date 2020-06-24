@@ -6,7 +6,10 @@
 
 <h1>All Climbing Shoes</h1>
 
-@foreach (var shoe in Model.Shoes)
-{
-    <partial name="_ShoeCard" model="shoe" />
-}
+<div class="card-columns">
+    @foreach (var shoe in Model.Shoes)
+    {
+        <partial name="_ShoeCard" model="shoe" />
+    }
+</div>
+

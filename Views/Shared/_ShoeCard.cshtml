@@ -1,23 +1,22 @@
 ﻿@model Shoe
 
 <div class="card">
-    <div>
-        <img class="card-img" src="@Model.ImageThumbnailUrl" alt="" />
-        <div class="card-subtitle">
-            <h3>@Model.Price.ToString("c")</h3>
-            <h3>
-                <a asp-controller="Shoe" asp-action="Details" asp-route-id="@Model.ShoeId">@Model.Name</a>
-            </h3>
-            <p>@Model.ShortDescription</p>
-        </div>
-        <div>
-            <p class="btn">
-                <a class="btn btn-primary"
-                   asp-controller="ShoppingCart"
-                   asp-action="AddToShoppingCart"
-                   asp-route-shoeId="@Model.ShoeId">Add to cart</a>
-            </p>
-        </div>
+    <img class="card-img-top" src="@Model.ImageThumbnailUrl" alt="" />
+    <div class="card-body">
+        <h3 class="card-subtitle">@Model.Price.ToString("c")</h3>
+        <h3 class="card-title">
+            <a class="stretched-link"asp-controller="Shoe" asp-action="Details" asp-route-id="@Model.ShoeId">@Model.Name</a>
+        </h3>
+        <p class="card-text">@Model.ShortDescription</p>
     </div>
-    
+    <div>
+        <p class="btn">
+            <a class="btn btn-primary"
+               asp-controller="ShoppingCart"
+               asp-action="AddToShoppingCart"
+               asp-route-shoeId="@Model.ShoeId">Add to cart</a>
+        </p>
+    </div>
+
+
 </div>
