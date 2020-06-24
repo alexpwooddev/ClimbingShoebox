@@ -16,6 +16,8 @@ namespace ClimbingShoebox.Models
         public DbSet<Shoe> Shoes { get; set; }
         public DbSet<Brand> Brands { get; set; }
 
+        public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

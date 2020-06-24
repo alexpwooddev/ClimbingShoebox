@@ -1,8 +1,13 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
+<partial name="_Carousel" />
+<br /><br />
+<h1>Welcome to Climbing Shoebox</h1>
+<hr />
+<h2>Check out this week's featured shoe:</h2>
+
+<partial name="_ShoeCard" model="@Model.FeaturedShoe" />

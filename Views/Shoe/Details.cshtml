@@ -1,0 +1,27 @@
+﻿@model Shoe
+@{
+    ViewData["Title"] = "Shoe Details";
+}
+
+
+<h2>@Model.Name</h2>
+
+<div class="img-thumbnail">
+    <img alt="@Model.Name" src="@Model.ImageUrl" />
+    <div class="figure-caption">
+        <h3>@Model.Price</h3>
+        <h3>
+            <a href="#">@Model.Name</a>
+        </h3>
+        <h4>@Model.ShortDescription</h4>
+        <p>@Model.LongDescription</p>
+    </div>
+    <div>
+        <p class="btn">
+            <a class="btn btn-primary"
+               asp-controller="ShoppingCart"
+               asp-action="AddToShoppingCart"
+               asp-route-shoeId="@Model.ShoeId">Add to cart</a>
+        </p>
+    </div>
+</div>

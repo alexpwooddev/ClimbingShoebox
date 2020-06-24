@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using ClimbingShoebox.Models;
 using ClimbingShoebox.ViewModels;
@@ -27,6 +28,16 @@ namespace ClimbingShoebox.Controllers
             shoesListViewModel.Shoes = shoeRepository.AllShoes;
                 
             return View(shoesListViewModel);
+        }
+
+        public IActionResult Details(int id)
+        {
+            var shoe = shoeRepository.GetShoebyId(id);
+            if(shoe == null)
+            {
+                return NotFound();
+            }
+            return View(shoe);
         }
     }
 }

@@ -6,27 +6,29 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ClimbingShoebox.Models;
+using ClimbingShoebox.ViewModels;
 
 namespace ClimbingShoebox.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IShoeRepository shoeRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IShoeRepository shoeRepository)
         {
-            _logger = logger;
+            this.shoeRepository = shoeRepository;
         }
-
         public IActionResult Index()
         {
-            return View();
+            var homeViewModel = new HomeViewModel
+            {
+                FeaturedShoe = shoeRepository.FeaturedShoe
+            };
+
+            return View(homeViewModel);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+   
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

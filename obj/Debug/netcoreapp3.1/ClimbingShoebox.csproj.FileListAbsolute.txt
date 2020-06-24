@@ -68,3 +68,7 @@ C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\Cli
 C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\ClimbingShoebox.dll
 C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\ClimbingShoebox.pdb
 C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\ClimbingShoebox.genruntimeconfig.cache
+C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\Razor\Views\Shoe\Details.cshtml.g.cs
+C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ShoeCard.cshtml.g.cs
+C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Carousel.cshtml.g.cs
+C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\Razor\Views\ShoppingCart\Index.cshtml.g.cs
