@@ -1,0 +1,30 @@
+﻿@model CategoryAndBrandViewModel
+
+<li class="dropdown">
+    <a asp-controller="Shoe"
+       asp-action="List"
+       class="dropdown-toggle nav-link text-dark" data-toggle="dropdown">Shoes</a>
+    <ul class="dropdown-menu">
+        @foreach (var category in Model.Categories)
+        {
+            <li>
+                <a asp-controller="Shoe" asp-action="List"
+                   asp-route-categoryOrBrand="@category.CategoryName">@category.CategoryName</a>
+            </li>
+        }
+        <li class="dropdown-divider"></li>
+        @foreach (var brand in Model.Brands)
+        {
+            <li>
+                <a asp-controller="Shoe" asp-action="List"
+                   asp-route-categoryOrBrand="@brand.BrandName">@brand.BrandName</a>
+            </li>
+
+        }
+        <li class="dropdown-divider"></li>
+        <li>
+            <a asp-controller="Shoe" asp-action="List" asp-route-categoryOrBrand="">All Shoes</a>
+        </li>
+
+    </ul>
+</li>

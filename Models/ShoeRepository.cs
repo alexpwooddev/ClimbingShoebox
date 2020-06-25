@@ -19,7 +19,7 @@ namespace ClimbingShoebox.Models
         {
             get
             {
-                return appDbContext.Shoes.Include(c => c.Category);
+                return appDbContext.Shoes.Include(c => c.Category).Include(b => b.Brand);
             }
         }
 

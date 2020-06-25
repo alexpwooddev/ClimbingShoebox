@@ -9,5 +9,8 @@ namespace ClimbingShoebox.ViewModels
     public class ShoesListViewModel
     {
         public IEnumerable<Shoe> Shoes { get; set; }
+
+        public string CurrentCategoryOrBrand { get; set; }
+
     }
 }

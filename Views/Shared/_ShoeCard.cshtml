@@ -5,7 +5,9 @@
     <div class="card-body">
         <h3 class="card-subtitle">@Model.Price.ToString("c")</h3>
         <h3 class="card-title">
-            <a class="stretched-link"asp-controller="Shoe" asp-action="Details" asp-route-id="@Model.ShoeId">@Model.Name</a>
+            <a asp-controller="Shoe"
+               asp-action="Details"
+               asp-route-shoeId="@Model.ShoeId">@Model.Name</a>
         </h3>
         <p class="card-text">@Model.ShortDescription</p>
     </div>

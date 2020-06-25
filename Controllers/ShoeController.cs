@@ -22,17 +22,50 @@ namespace ClimbingShoebox.Controllers
             this.brandRepository = brandRepository;
         }
         
-        public IActionResult List()
+        public IActionResult List(string categoryOrBrand)
         {
-            ShoesListViewModel shoesListViewModel = new ShoesListViewModel();
-            shoesListViewModel.Shoes = shoeRepository.AllShoes;
+            IEnumerable<Shoe> shoes;
+            string currentCategoryOrBrand;
+
+            if (string.IsNullOrEmpty(categoryOrBrand))
+            {
+                shoes = shoeRepository.AllShoes.OrderBy(s => s.ShoeId);
+                currentCategoryOrBrand = "All shoes";
+            }
+            else
+            {
+                if (shoeRepository.AllShoes.FirstOrDefault(s => s.Category.CategoryName == categoryOrBrand)?.ShoeId == null)
+                {
+                    shoes = shoeRepository.AllShoes.Where(s => s.Brand.BrandName == categoryOrBrand);
+                }
+                else
+                {
+                    shoes = shoeRepository.AllShoes.Where(s => s.Category.CategoryName == categoryOrBrand).OrderBy(s => s.ShoeId);
+                }
                 
-            return View(shoesListViewModel);
+                if (categoryRepository.AllCategories.FirstOrDefault(c => c.CategoryName == categoryOrBrand)?.CategoryName == null)
+                {
+                    currentCategoryOrBrand = brandRepository.AllBrands.FirstOrDefault(b => b.BrandName == categoryOrBrand)?.BrandName;
+                }
+                else
+                {
+                    currentCategoryOrBrand = categoryRepository.AllCategories.FirstOrDefault(c => c.CategoryName == categoryOrBrand)?.CategoryName;
+                }                            
+            }
+
+            return View(new ShoesListViewModel
+            {
+                Shoes = shoes,
+                CurrentCategoryOrBrand = currentCategoryOrBrand
+            });
+
+
+            
         }
 
-        public IActionResult Details(int id)
+        public IActionResult Details(int shoeId)
         {
-            var shoe = shoeRepository.GetShoebyId(id);
+            var shoe = shoeRepository.GetShoebyId(shoeId);
             if(shoe == null)
             {
                 return NotFound();
