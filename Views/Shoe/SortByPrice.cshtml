@@ -1,0 +1,23 @@
+﻿@model ShoesListViewModel
+@{
+    ViewData["Title"] = "Shoes";
+}
+
+
+<h1>@Model.CurrentCategoryOrBrand</h1>
+<br />
+<a class="dropdown-toggle nav-link text-light" data-toggle="dropdown">Sort by price</a>
+<ul class="dropdown-menu">
+    <li>
+        <a asp-controller="Shoe" asp-action="SortByPrice" asp-route-ascendingOrDescending="ascending">Low to high</a>
+    </li>
+    <li>
+        <a asp-controller="Shoe" asp-action="SortByPrice" asp-route-ascendingOrDescending="descending">High to low</a>
+    </li>
+</ul>
+<div class="containerflex">
+    @foreach (var shoe in Model.Shoes)
+    {
+        <partial name="_ShoeCard" model="shoe" />
+    }
+</div>

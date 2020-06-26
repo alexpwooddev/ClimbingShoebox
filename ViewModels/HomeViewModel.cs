@@ -9,5 +9,7 @@ namespace ClimbingShoebox.ViewModels
     public class HomeViewModel
     {
         public Shoe FeaturedShoe { get; set; }
+
+        public string query { get; set; }
     }
 }

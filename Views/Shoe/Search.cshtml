@@ -1,0 +1,14 @@
+﻿@model ShoesListViewModel
+@{
+    ViewData["Title"] = "Shoes Search";
+}
+
+
+<h1>@Model.CurrentCategoryOrBrand</h1>
+<br />
+<div class="card-columns">
+    @foreach (var shoe in Model.Shoes)
+    {
+        <partial name="_ShoeCard" model="shoe" />
+    }
+</div>

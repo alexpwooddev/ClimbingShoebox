@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\MockData NotInUse\MockBrandRepository.cs" />
+    <Compile Remove="Models\MockData NotInUse\MockCategoryRepository.cs" />
+    <Compile Remove="Models\MockData NotInUse\MockShoeRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.5" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.5" />
@@ -13,6 +19,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\MockData NotInUse\" />
   </ItemGroup>
 
 </Project>

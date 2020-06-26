@@ -10,5 +10,6 @@ namespace ClimbingShoebox.Models
         IEnumerable<Shoe> AllShoes { get; }
         Shoe FeaturedShoe { get; }
         Shoe GetShoebyId(int shoeId);
+        IEnumerable<Shoe> GetShoesByName(string nameQuery);
     }
 }

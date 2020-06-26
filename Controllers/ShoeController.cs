@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ClimbingShoebox.Models;
 using ClimbingShoebox.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace ClimbingShoebox.Controllers
 {
@@ -57,11 +58,49 @@ namespace ClimbingShoebox.Controllers
             {
                 Shoes = shoes,
                 CurrentCategoryOrBrand = currentCategoryOrBrand
-            });
-
-
-            
+            });        
         }
+
+        public IActionResult SortByPrice(string ascendingOrDescending)
+        {
+            IEnumerable<Shoe> shoes;
+
+            if (ascendingOrDescending == "ascending")
+            {
+                shoes = shoeRepository.AllShoes.OrderBy(s => s.Price);
+            }
+            else
+            {
+                shoes = shoeRepository.AllShoes.OrderByDescending(s => s.Price);
+            }           
+
+            return View(new ShoesListViewModel
+            {
+                Shoes = shoes,
+                CurrentCategoryOrBrand = "All Shoes"
+            });
+        }
+
+        public IActionResult Search(string query)
+        {
+            IEnumerable<Shoe> shoes;
+            
+            if (string.IsNullOrEmpty(query))
+            {
+                shoes = shoeRepository.AllShoes.OrderBy(s => s.ShoeId);
+            }
+            else
+            {
+                shoes = shoeRepository.GetShoesByName(query);
+            }
+
+            return View(new ShoesListViewModel
+            {
+                Shoes = shoes,
+                CurrentCategoryOrBrand = $"Search results for {query}"
+            });
+        }
+
 
         public IActionResult Details(int shoeId)
         {

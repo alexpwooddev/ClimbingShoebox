@@ -170,3 +170,5 @@ C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\Raz
 C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\_ViewStart.cshtml.g.cs
 C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LoginPartial.cshtml.g.cs
 C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\Razor\Views\StoreLocations\Index.cshtml.g.cs
+C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\Razor\Views\Shoe\Search.cshtml.g.cs
+C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\Razor\Views\Shoe\SortByPrice.cshtml.g.cs
