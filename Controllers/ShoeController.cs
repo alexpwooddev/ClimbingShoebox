@@ -22,28 +22,80 @@ namespace ClimbingShoebox.Controllers
             this.categoryRepository = categoryRepository;
             this.brandRepository = brandRepository;
         }
-        
-        public IActionResult List(string categoryOrBrand)
+
+        public IActionResult List(string categoryOrBrand, string ascendingOrDescending)
         {
             IEnumerable<Shoe> shoes;
             string currentCategoryOrBrand;
 
-            if (string.IsNullOrEmpty(categoryOrBrand))
+            //No Category or Brand and no ascending/descending selection - i.e. just all shoes
+            if (string.IsNullOrEmpty(categoryOrBrand) && string.IsNullOrEmpty(ascendingOrDescending))
             {
                 shoes = shoeRepository.AllShoes.OrderBy(s => s.ShoeId);
                 currentCategoryOrBrand = "All shoes";
-            }
-            else
-            {
-                if (shoeRepository.AllShoes.FirstOrDefault(s => s.Category.CategoryName == categoryOrBrand)?.ShoeId == null)
+                
+                return View(new ShoesListViewModel
                 {
-                    shoes = shoeRepository.AllShoes.Where(s => s.Brand.BrandName == categoryOrBrand);
+                    Shoes = shoes,
+                    CurrentCategoryOrBrand = currentCategoryOrBrand
+                });
+            }
+
+            //No Category/Brand but ascending/descending selected
+            if (categoryOrBrand == "All shoes")
+            {
+                currentCategoryOrBrand = "All shoes";
+                if (ascendingOrDescending == "ascending")
+                {
+                    shoes = shoeRepository.AllShoes.OrderBy(s => s.Price);
                 }
                 else
                 {
-                    shoes = shoeRepository.AllShoes.Where(s => s.Category.CategoryName == categoryOrBrand).OrderBy(s => s.ShoeId);
+                    shoes = shoeRepository.AllShoes.OrderByDescending(s => s.Price);
                 }
-                
+
+                return View(new ShoesListViewModel
+                {
+                    Shoes = shoes,
+                    CurrentCategoryOrBrand = currentCategoryOrBrand
+                });
+
+            }
+
+            //Category/Brand selected but no ascending/descending selected
+            if (shoeRepository.AllShoes.FirstOrDefault(s => s.Category.CategoryName == categoryOrBrand)?.ShoeId == null && string.IsNullOrEmpty(ascendingOrDescending))
+            {
+                shoes = shoeRepository.AllShoes.Where(s => s.Brand.BrandName == categoryOrBrand).OrderBy(s => s.ShoeId);
+            }
+            else
+            {
+                shoes = shoeRepository.AllShoes.Where(s => s.Category.CategoryName == categoryOrBrand).OrderBy(s => s.ShoeId);
+            }
+
+
+            if (categoryRepository.AllCategories.FirstOrDefault(c => c.CategoryName == categoryOrBrand)?.CategoryName == null)
+            {
+                currentCategoryOrBrand = brandRepository.AllBrands.FirstOrDefault(b => b.BrandName == categoryOrBrand)?.BrandName;
+            }
+            else
+            {
+                currentCategoryOrBrand = categoryRepository.AllCategories.FirstOrDefault(c => c.CategoryName == categoryOrBrand)?.CategoryName;
+            }
+
+
+            //Category/Brand selected AND ascending/descending selected
+            if (ascendingOrDescending == "ascending")
+            {
+                if (shoeRepository.AllShoes.FirstOrDefault(s => s.Category.CategoryName == categoryOrBrand)?.ShoeId == null)
+                {
+                    shoes = shoeRepository.AllShoes.Where(s => s.Brand.BrandName == categoryOrBrand).OrderBy(s => s.Price);
+                }
+                else
+                {
+                    shoes = shoeRepository.AllShoes.Where(s => s.Category.CategoryName == categoryOrBrand).OrderBy(s => s.Price);
+                }
+
+
                 if (categoryRepository.AllCategories.FirstOrDefault(c => c.CategoryName == categoryOrBrand)?.CategoryName == null)
                 {
                     currentCategoryOrBrand = brandRepository.AllBrands.FirstOrDefault(b => b.BrandName == categoryOrBrand)?.BrandName;
@@ -51,40 +103,45 @@ namespace ClimbingShoebox.Controllers
                 else
                 {
                     currentCategoryOrBrand = categoryRepository.AllCategories.FirstOrDefault(c => c.CategoryName == categoryOrBrand)?.CategoryName;
-                }                            
+                }
             }
+            else
+            {
+                if (shoeRepository.AllShoes.FirstOrDefault(s => s.Category.CategoryName == categoryOrBrand)?.ShoeId == null)
+                {
+                    shoes = shoeRepository.AllShoes.Where(s => s.Brand.BrandName == categoryOrBrand).OrderByDescending(s => s.Price);
+                }
+                else
+                {
+                    shoes = shoeRepository.AllShoes.Where(s => s.Category.CategoryName == categoryOrBrand).OrderByDescending(s => s.Price);
+                }
+
+
+                if (categoryRepository.AllCategories.FirstOrDefault(c => c.CategoryName == categoryOrBrand)?.CategoryName == null)
+                {
+                    currentCategoryOrBrand = brandRepository.AllBrands.FirstOrDefault(b => b.BrandName == categoryOrBrand)?.BrandName;
+                }
+                else
+                {
+                    currentCategoryOrBrand = categoryRepository.AllCategories.FirstOrDefault(c => c.CategoryName == categoryOrBrand)?.CategoryName;
+                }
+            }
+
+
 
             return View(new ShoesListViewModel
             {
                 Shoes = shoes,
                 CurrentCategoryOrBrand = currentCategoryOrBrand
-            });        
-        }
-
-        public IActionResult SortByPrice(string ascendingOrDescending)
-        {
-            IEnumerable<Shoe> shoes;
-
-            if (ascendingOrDescending == "ascending")
-            {
-                shoes = shoeRepository.AllShoes.OrderBy(s => s.Price);
-            }
-            else
-            {
-                shoes = shoeRepository.AllShoes.OrderByDescending(s => s.Price);
-            }           
-
-            return View(new ShoesListViewModel
-            {
-                Shoes = shoes,
-                CurrentCategoryOrBrand = "All Shoes"
             });
         }
+
+
 
         public IActionResult Search(string query)
         {
             IEnumerable<Shoe> shoes;
-            
+
             if (string.IsNullOrEmpty(query))
             {
                 shoes = shoeRepository.AllShoes.OrderBy(s => s.ShoeId);
@@ -105,7 +162,7 @@ namespace ClimbingShoebox.Controllers
         public IActionResult Details(int shoeId)
         {
             var shoe = shoeRepository.GetShoebyId(shoeId);
-            if(shoe == null)
+            if (shoe == null)
             {
                 return NotFound();
             }

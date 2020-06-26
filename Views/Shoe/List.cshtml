@@ -6,19 +6,20 @@
 
 <h1>@Model.CurrentCategoryOrBrand</h1>
 <br />
-@if (Model.CurrentCategoryOrBrand == "All shoes")
-{
-    <a class="dropdown-toggle nav-link text-light" data-toggle="dropdown">Sort by price</a>
-    <ul class="dropdown-menu">
-        <li>
-            <a asp-controller="Shoe" asp-action="SortByPrice" asp-route-ascendingOrDescending="ascending">Low to high</a>
-        </li>
-        <li>
-            <a asp-controller="Shoe" asp-action="SortByPrice" asp-route-ascendingOrDescending="descending">High to low</a>
-        </li>
-    </ul>
 
-}
+<a class="dropdown-toggle nav-link text-light" data-toggle="dropdown">Sort by price</a>
+<ul class="dropdown-menu">
+    <li>
+        <a asp-controller="Shoe" asp-action="List" asp-route-ascendingOrDescending="ascending"
+           asp-route-categoryOrBrand="@Model.CurrentCategoryOrBrand">Low to high</a>
+    </li>
+    <li>
+        <a asp-controller="Shoe" asp-action="List" asp-route-ascendingOrDescending="descending"
+           asp-route-categoryOrBrand="@Model.CurrentCategoryOrBrand">High to low</a>
+    </li>
+</ul>
+
+
 
 <div class="containerflex">
     @foreach (var shoe in Model.Shoes)
