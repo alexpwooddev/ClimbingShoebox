@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ClimbingShoebox.Models
 {
-    public class AppDbContext : IdentityDbContext<IdentityUser>
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -20,6 +20,8 @@ namespace ClimbingShoebox.Models
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<FavouriteShoe> FavouriteShoes { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

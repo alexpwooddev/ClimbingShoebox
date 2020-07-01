@@ -1,0 +1,25 @@
+﻿@model Shoe
+@{
+    ViewData["Title"] = "Favourite Shoe";
+}
+
+<h2>@Model.Name</h2>
+
+<div class="card featureShoeCard">
+    <img class="card-img-top" alt="@Model.Name" src="@Model.ImageUrl" />
+    <div class="card-body">
+        <h3 class="card-subtitle">@Model.Price.ToString("c")</h3>
+        <h3 class="card-title">
+            <a href="#">@Model.Name</a>
+        </h3>
+        <p class="card-text">@Model.LongDescription</p>
+    </div>
+    <div>
+        <p class="btn">
+            <a class="btn btn-primary"
+               asp-controller="ShoppingCart"
+               asp-action="AddToShoppingCart"
+               asp-route-shoeId="@Model.ShoeId">Add to cart</a>
+        </p>
+    </div>
+</div>
