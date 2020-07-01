@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200701191331_ApplicationUserAdded.cs" />
+    <Compile Remove="Migrations\20200701191331_ApplicationUserAdded.Designer.cs" />
+    <Compile Remove="Migrations\20200701193945_reConfigIdentityWithApplicationUser.cs" />
+    <Compile Remove="Migrations\20200701193945_reConfigIdentityWithApplicationUser.Designer.cs" />
     <Compile Remove="Models\MockData NotInUse\MockBrandRepository.cs" />
     <Compile Remove="Models\MockData NotInUse\MockCategoryRepository.cs" />
     <Compile Remove="Models\MockData NotInUse\MockShoeRepository.cs" />

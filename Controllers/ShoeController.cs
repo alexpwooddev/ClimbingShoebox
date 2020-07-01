@@ -15,12 +15,15 @@ namespace ClimbingShoebox.Controllers
         private readonly IShoeRepository shoeRepository;
         private readonly ICategoryRepository categoryRepository;
         private readonly IBrandRepository brandRepository;
+        private readonly IFavouriteShoeRepository favouriteShoeRepository;
 
-        public ShoeController(IShoeRepository shoeRepository, ICategoryRepository categoryRepository, IBrandRepository brandRepository)
+        public ShoeController(IShoeRepository shoeRepository, ICategoryRepository categoryRepository, 
+            IBrandRepository brandRepository, IFavouriteShoeRepository favouriteShoeRepository)
         {
             this.shoeRepository = shoeRepository;
             this.categoryRepository = categoryRepository;
             this.brandRepository = brandRepository;
+            this.favouriteShoeRepository = favouriteShoeRepository;
         }
 
         public IActionResult List(string categoryOrBrand, string ascendingOrDescending)
@@ -167,6 +170,40 @@ namespace ClimbingShoebox.Controllers
                 return NotFound();
             }
             return View(shoe);
+        }
+
+
+        public IActionResult FavouriteShoe()
+        {
+            var favouriteShoe = favouriteShoeRepository.CurrentFavouriteShoe;
+            if (favouriteShoe == null)
+            {
+                return RedirectToAction("NoFavourites");
+            }
+
+            var shoeInFavouriteShoe = shoeRepository.GetShoebyId(favouriteShoe.ShoeId);
+
+            return View(shoeInFavouriteShoe);
+        }
+
+        public IActionResult NoFavourites()
+        {
+            return View();
+        }
+
+ 
+        public IActionResult AddToFavourite(int shoeId)
+        {
+            favouriteShoeRepository.AddFavourite(shoeId);
+
+            return RedirectToAction("FavouriteShoe");
+        }
+
+        public IActionResult RemoveFromFavourite(int shoeId)
+        {
+            favouriteShoeRepository.RemoveFavourite(shoeId);
+
+            return RedirectToAction("FavouriteShoe");
         }
     }
 }
