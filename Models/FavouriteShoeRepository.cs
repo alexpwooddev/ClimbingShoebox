@@ -45,5 +45,32 @@ namespace ClimbingShoebox.Models
                 return appDbContext.FavouriteShoes.FirstOrDefault(f => f.ApplicationUserId == currentUser);
             }
         }
+
+        public void AddFavourite(int shoeId)
+        {
+            //clear current favourite first
+            appDbContext.Database.ExecuteSqlCommand("delete from FavouriteShoes");
+            
+
+            var shoe = appDbContext.Shoes.FirstOrDefault(s => s.ShoeId == shoeId);
+
+            var favouriteShoe = new FavouriteShoe
+            {
+                ShoeId = shoeId,
+                ApplicationUserId = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier),
+            };
+
+            appDbContext.FavouriteShoes.Add(favouriteShoe);
+
+            appDbContext.SaveChanges();
+        }
+
+        public void RemoveFavourite(int shoeId)
+        {
+            var favouriteShoe = appDbContext.FavouriteShoes.FirstOrDefault(f => f.ShoeId == shoeId);
+
+            appDbContext.FavouriteShoes.Remove(favouriteShoe);
+            appDbContext.SaveChanges();
+        }
     }
 }

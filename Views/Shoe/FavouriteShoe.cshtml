@@ -3,7 +3,7 @@
     ViewData["Title"] = "Favourite Shoe";
 }
 
-<h2>@Model.Name</h2>
+<h2>Favourite Shoe: @Model.Name</h2>
 
 <div class="card featureShoeCard">
     <img class="card-img-top" alt="@Model.Name" src="@Model.ImageUrl" />
@@ -20,6 +20,11 @@
                asp-controller="ShoppingCart"
                asp-action="AddToShoppingCart"
                asp-route-shoeId="@Model.ShoeId">Add to cart</a>
+        </p>
+        <p class="btn">
+            <a class="btn btn-primary"
+               asp-action="RemoveFromFavourite"
+               asp-route-shoeId="@Model.ShoeId">Remove from favourites</a>
         </p>
     </div>
 </div>

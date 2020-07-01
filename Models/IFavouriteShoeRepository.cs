@@ -9,5 +9,9 @@ namespace ClimbingShoebox.Models
     {
         IEnumerable<FavouriteShoe> AllFavouriteShoes { get; }
         FavouriteShoe CurrentFavouriteShoe { get; }
+
+        void AddFavourite(int shoeId);
+
+        void RemoveFavourite(int shoeId);
     }
 }

@@ -178,12 +178,32 @@ namespace ClimbingShoebox.Controllers
             var favouriteShoe = favouriteShoeRepository.CurrentFavouriteShoe;
             if (favouriteShoe == null)
             {
-                return NotFound();
+                return RedirectToAction("NoFavourites");
             }
 
             var shoeInFavouriteShoe = shoeRepository.GetShoebyId(favouriteShoe.ShoeId);
 
             return View(shoeInFavouriteShoe);
+        }
+
+        public IActionResult NoFavourites()
+        {
+            return View();
+        }
+
+ 
+        public IActionResult AddToFavourite(int shoeId)
+        {
+            favouriteShoeRepository.AddFavourite(shoeId);
+
+            return RedirectToAction("FavouriteShoe");
+        }
+
+        public IActionResult RemoveFromFavourite(int shoeId)
+        {
+            favouriteShoeRepository.RemoveFavourite(shoeId);
+
+            return RedirectToAction("FavouriteShoe");
         }
     }
 }
