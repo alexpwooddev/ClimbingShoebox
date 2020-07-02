@@ -15,15 +15,17 @@ namespace ClimbingShoebox.Controllers
         private readonly IShoeRepository shoeRepository;
         private readonly ICategoryRepository categoryRepository;
         private readonly IBrandRepository brandRepository;
-        private readonly IFavouriteShoeRepository favouriteShoeRepository;
+        private readonly FavouritesCollection favouritesCollection;
+        private readonly IServiceProvider services;
 
         public ShoeController(IShoeRepository shoeRepository, ICategoryRepository categoryRepository, 
-            IBrandRepository brandRepository, IFavouriteShoeRepository favouriteShoeRepository)
+            IBrandRepository brandRepository, FavouritesCollection favouritesCollection, IServiceProvider services)
         {
             this.shoeRepository = shoeRepository;
             this.categoryRepository = categoryRepository;
             this.brandRepository = brandRepository;
-            this.favouriteShoeRepository = favouriteShoeRepository;
+            this.favouritesCollection = favouritesCollection;
+            this.services = services;
         }
 
         public IActionResult List(string categoryOrBrand, string ascendingOrDescending)
@@ -173,17 +175,20 @@ namespace ClimbingShoebox.Controllers
         }
 
 
-        public IActionResult FavouriteShoe()
+        public IActionResult FavouriteShoes()
         {
-            var favouriteShoe = favouriteShoeRepository.CurrentFavouriteShoe;
-            if (favouriteShoe == null)
+            var items = favouritesCollection.GetCollectionItems();
+            favouritesCollection.FavouritesCollectionItems = items;
+
+            if (items == null)
             {
                 return RedirectToAction("NoFavourites");
             }
-
-            var shoeInFavouriteShoe = shoeRepository.GetShoebyId(favouriteShoe.ShoeId);
-
-            return View(shoeInFavouriteShoe);
+            else
+            {
+                return View(favouritesCollection);            
+            }
+        
         }
 
         public IActionResult NoFavourites()
@@ -194,16 +199,16 @@ namespace ClimbingShoebox.Controllers
  
         public IActionResult AddToFavourite(int shoeId)
         {
-            favouriteShoeRepository.AddFavourite(shoeId);
+            favouritesCollection.AddToCollection(services, shoeId);
 
-            return RedirectToAction("FavouriteShoe");
+            return RedirectToAction("FavouriteShoes");
         }
 
         public IActionResult RemoveFromFavourite(int shoeId)
         {
-            favouriteShoeRepository.RemoveFavourite(shoeId);
+            favouritesCollection.RemoveFromCollection(shoeId);
 
-            return RedirectToAction("FavouriteShoe");
+            return RedirectToAction("FavouriteShoes");
         }
     }
 }

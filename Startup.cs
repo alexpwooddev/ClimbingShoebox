@@ -39,9 +39,9 @@ namespace ClimbingShoebox
             services.AddScoped<IShoeRepository, ShoeRepository>();
             services.AddScoped<IBrandRepository, BrandRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
-            services.AddScoped<IFavouriteShoeRepository, FavouriteShoeRepository>();
 
             services.AddScoped<ShoppingCart>(sp => ShoppingCart.GetCart(sp));
+            services.AddScoped<FavouritesCollection>(sp => FavouritesCollection.GetCollection(sp));
 
             
             services.AddSession();

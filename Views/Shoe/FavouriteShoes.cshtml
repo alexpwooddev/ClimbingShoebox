@@ -1,0 +1,14 @@
+﻿@model FavouritesCollection
+@{
+    ViewData["Title"] = "Favourite Shoes";
+}
+
+<h2>Favourite Shoes:</h2>
+
+
+<div class="containerflex">
+    @foreach (var item in Model.FavouritesCollectionItems)
+    {
+        <partial name="_FavouriteShoeCard" model="@item.Shoe" />
+    }
+</div>

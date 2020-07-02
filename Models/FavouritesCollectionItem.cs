@@ -7,14 +7,16 @@ using System.Threading.Tasks;
 
 namespace ClimbingShoebox.Models
 {
-    public class FavouriteShoe
+    public class FavouritesCollectionItem
     {
         
-        public int FavouriteShoeId { get; set; }
+        public int FavouritesCollectionItemId { get; set; }
         public Shoe Shoe { get; set; }
         
         [ForeignKey("ShoeId")]
         public int ShoeId { get; set; }
+
+        public string FavouritesCollectionId { get; set; }
 
         [ForeignKey("ApplicationUser")]
         public string ApplicationUserId { get; set; }

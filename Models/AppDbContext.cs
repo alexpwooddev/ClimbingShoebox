@@ -20,7 +20,7 @@ namespace ClimbingShoebox.Models
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
-        public DbSet<FavouriteShoe> FavouriteShoes { get; set; }
+        public DbSet<FavouritesCollectionItem> FavouritesCollectionItems { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
