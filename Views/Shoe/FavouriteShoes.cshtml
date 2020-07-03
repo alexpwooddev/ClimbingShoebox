@@ -1,13 +1,17 @@
-﻿@model FavouritesCollection
+﻿@model FavouritesCollectionViewModel
 @{
     ViewData["Title"] = "Favourite Shoes";
 }
 
 <h2>Favourite Shoes:</h2>
 
+@if (Model.tempMessage != null)
+{
+    <div class="alert alert-info text-center">@Model.tempMessage</div>
+}
 
 <div class="containerflex">
-    @foreach (var item in Model.FavouritesCollectionItems)
+    @foreach (var item in Model.FavouritesCollection.FavouritesCollectionItems)
     {
         <partial name="_FavouriteShoeCard" model="@item.Shoe" />
     }

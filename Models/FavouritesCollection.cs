@@ -13,7 +13,7 @@ namespace ClimbingShoebox.Models
     {
         private readonly AppDbContext appDbContext;
 
-        public string FavouritesCollectionId { get; set; }
+        //public string FavouritesCollectionId { get; set; }
 
         public List<FavouritesCollectionItem> FavouritesCollectionItems { get; set; }
 
@@ -30,30 +30,29 @@ namespace ClimbingShoebox.Models
 
             var context = services.GetService<AppDbContext>();
 
-            string collectionId = session.GetString("CollectionId") ?? Guid.NewGuid().ToString();
+            //string collectionId = session.GetString("CollectionId") ?? Guid.NewGuid().ToString();
 
-            session.SetString("CollectionId", collectionId);
+            //session.SetString("CollectionId", collectionId);
 
-            return new FavouritesCollection(context) { FavouritesCollectionId = collectionId };
+            return new FavouritesCollection(context);
+            
+            //{ FavouritesCollectionId = collectionId };
 
         }
 
         public void AddToCollection(IServiceProvider services, int shoeId)
         {
             var userId = services.GetRequiredService<IHttpContextAccessor>()?.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
             var shoe = appDbContext.Shoes.FirstOrDefault(s => s.ShoeId == shoeId);
-
             var favouritesCollectionItem = appDbContext.FavouritesCollectionItems.SingleOrDefault
-                (c => c.Shoe.ShoeId == shoeId && c.FavouritesCollectionId == FavouritesCollectionId);
+                (c => c.Shoe.ShoeId == shoeId && c.ApplicationUserId == userId);
 
             //check if already in collection
-            //if not in collection, add it
+            //if not in collection, make a new item then add it to the database of items
             if (favouritesCollectionItem == null)
             {
                 favouritesCollectionItem = new FavouritesCollectionItem
                 {
-                    FavouritesCollectionId = FavouritesCollectionId,
                     Shoe = shoe,
                     ShoeId = shoe.ShoeId,
                     ApplicationUserId = userId
@@ -66,10 +65,11 @@ namespace ClimbingShoebox.Models
         }
 
 
-        public void RemoveFromCollection(int shoeId)
+        public void RemoveFromCollection(IServiceProvider services, int shoeId)
         {
+            var userId = services.GetRequiredService<IHttpContextAccessor>()?.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var favouritesCollectionItem = appDbContext.FavouritesCollectionItems.SingleOrDefault
-                (c => c.Shoe.ShoeId == shoeId && c.FavouritesCollectionId == FavouritesCollectionId);
+                (c => c.Shoe.ShoeId == shoeId && c.ApplicationUserId == userId);
 
             //if it exists, then remove it
             if (favouritesCollectionItem != null)
@@ -82,11 +82,13 @@ namespace ClimbingShoebox.Models
         }
 
 
-        public List<FavouritesCollectionItem> GetCollectionItems()
+        public List<FavouritesCollectionItem> GetCollectionItems(IServiceProvider services)
         {
+            var userId = services.GetRequiredService<IHttpContextAccessor>()?.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             return FavouritesCollectionItems ??
                 (FavouritesCollectionItems = appDbContext.FavouritesCollectionItems.
-                Where(c => c.FavouritesCollectionId == FavouritesCollectionId)
+                Where(c => c.ApplicationUserId == userId)
                 .Include(s => s.Shoe)
                 .ToList());
         }

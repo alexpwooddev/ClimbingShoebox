@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using ClimbingShoebox.Models;
 using ClimbingShoebox.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 
 namespace ClimbingShoebox.Controllers
 {
@@ -32,17 +34,18 @@ namespace ClimbingShoebox.Controllers
         {
             IEnumerable<Shoe> shoes;
             string currentCategoryOrBrand;
+            
 
             //No Category or Brand and no ascending/descending selection - i.e. just all shoes
             if (string.IsNullOrEmpty(categoryOrBrand) && string.IsNullOrEmpty(ascendingOrDescending))
             {
                 shoes = shoeRepository.AllShoes.OrderBy(s => s.ShoeId);
                 currentCategoryOrBrand = "All shoes";
-                
+
                 return View(new ShoesListViewModel
                 {
                     Shoes = shoes,
-                    CurrentCategoryOrBrand = currentCategoryOrBrand
+                    CurrentCategoryOrBrand = currentCategoryOrBrand,
                 });
             }
 
@@ -177,8 +180,20 @@ namespace ClimbingShoebox.Controllers
 
         public IActionResult FavouriteShoes()
         {
-            var items = favouritesCollection.GetCollectionItems();
+            var items = favouritesCollection.GetCollectionItems(services);
             favouritesCollection.FavouritesCollectionItems = items;
+            string message;
+
+            if (TempData.ContainsKey("favouritedMessage"))
+            {
+                message = TempData["favouritedMessage"].ToString();
+            }
+            else
+            {
+                message = null;
+            }
+
+
 
             if (items == null)
             {
@@ -186,7 +201,11 @@ namespace ClimbingShoebox.Controllers
             }
             else
             {
-                return View(favouritesCollection);            
+                return View(new FavouritesCollectionViewModel
+                {
+                    FavouritesCollection = favouritesCollection,
+                    tempMessage = message
+                });     
             }
         
         }
@@ -206,7 +225,9 @@ namespace ClimbingShoebox.Controllers
 
         public IActionResult RemoveFromFavourite(int shoeId)
         {
-            favouritesCollection.RemoveFromCollection(shoeId);
+            favouritesCollection.RemoveFromCollection(services, shoeId);
+
+            TempData["favouritedMessage"] = "Shoes were removed from your favourites";
 
             return RedirectToAction("FavouriteShoes");
         }

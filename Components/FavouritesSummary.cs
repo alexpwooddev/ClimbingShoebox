@@ -11,19 +11,18 @@ namespace ClimbingShoebox.Components
     public class FavouritesSummary : ViewComponent
     {
         private readonly FavouritesCollection favouritesCollection;
+        private readonly IServiceProvider services;
 
-        public FavouritesSummary(FavouritesCollection favouritesCollection)
+        public FavouritesSummary(FavouritesCollection favouritesCollection, IServiceProvider services)
         {
             this.favouritesCollection = favouritesCollection;
+            this.services = services;
         }
 
         public IViewComponentResult Invoke()
         {
 
-
-
-
-            var items = favouritesCollection.GetCollectionItems();
+            var items = favouritesCollection.GetCollectionItems(services);
             favouritesCollection.FavouritesCollectionItems = items;
 
             var favouritesCollectionViewModel = new FavouritesCollectionViewModel

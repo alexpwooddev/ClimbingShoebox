@@ -10,6 +10,8 @@ namespace ClimbingShoebox.ViewModels
     {
         public FavouritesCollection FavouritesCollection { get; set; }
 
+        public string tempMessage { get; set; }
+
 
     }
 }
