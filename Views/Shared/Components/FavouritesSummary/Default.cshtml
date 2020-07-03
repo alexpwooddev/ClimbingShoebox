@@ -4,9 +4,9 @@
 {
     <li>
         <a asp-controller="Shoe" asp-action="FavouriteShoes" class="nav-link text-dark">
-            <i class="fa fa-star"></i>
+            Favourited Shoes: <i class="fa fa-star"></i>
             <span id="cart-status">
-                @Model.FavouritesCollection.FavouritesCollectionItems.Count
+                (@Model.FavouritesCollection.FavouritesCollectionItems.Count)
             </span>
         </a>
     </li>
