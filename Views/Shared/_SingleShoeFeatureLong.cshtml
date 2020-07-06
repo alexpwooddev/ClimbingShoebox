@@ -1,0 +1,39 @@
+﻿@model Shoe
+
+<div class="product-landing-card">
+    <div class="d-flex align-items-center">
+        <div class="p-2 flex-fill">
+            <div class="p-2 flex-fill text-center">
+                <img class="product-landing-img-toppane" src="@Model.ImageUrl" />
+            </div>
+            <h3>@Model.Name</h3>
+            <h3>@Model.Price.ToString("c")</h3>
+            <p>@Model.LongDescription</p>
+            <div class="d-flex">
+                <div>
+                    <p class="btn">
+                        <a class="btn btn-primary shadow"
+                           asp-controller="ShoppingCart"
+                           asp-action="AddToShoppingCart"
+                           asp-route-shoeId="@Model.ShoeId">Add to cart</a>
+                    </p>
+                </div>
+                <div>
+                    <p class="btn">
+                        <a class="btn btn-primary shadow"
+                           asp-controller="Shoe"
+                           asp-action="AddToFavourite"
+                           asp-route-shoeId="@Model.ShoeId">Favourite this shoe!</a>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+        <div class="p-2 flex-fill">
+            <img class="product-landing-img-rightpane" src="@Model.ImageUrl" />
+        </div>
+    </div>
+
+
+
+</div>
