@@ -4,7 +4,7 @@ for details on configuring this project to bundle and minify static web assets. 
 a.navbar-brand {
     white-space: normal;
     text-align: center;
-    word-break: break-all;
+    word-break: normal;
 }
 
 /* Provide sufficient contrast against white background */
@@ -129,10 +129,21 @@ p {
     margin: 5px;
 }
 
+    .card:hover {
+        box-shadow: 0 16px 32px 0 rgba(0,0,0,0.2);
+    }
 
-@media only screen and (max-width: 2000px) {
+
+@media only screen and (max-width: 2500px) {
     .card {
-        width: 20vw;
+        width: 12vw;
+    }
+}
+
+
+@media only screen and (max-width: 1600px) {
+    .card {
+        width: 19vw;
     }
 }
 
@@ -151,17 +162,11 @@ p {
 
 @media only screen and (max-width: 750px) {
     .card {
-        width: 30vw;
+        width: 35vw;
     }
 }
 
 @media only screen and (max-width: 600px) {
-    .card {
-        width: 45vw;
-    }
-}
-
-@media only screen and (max-width: 500px) {
     .card {
         width: 90vw;
     }

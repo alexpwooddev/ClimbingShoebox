@@ -24,11 +24,22 @@ namespace ClimbingShoebox.Controllers
         {
             var items = shoppingCart.GetShoppingCartItems();
             shoppingCart.ShoppingCartItems = items;
+            string message;
+
+            if (TempData.ContainsKey("emptyCartMessage"))
+            {
+                message = TempData["emptyCartMessage"].ToString();
+            }
+            else
+            {
+                message = null;
+            }
 
             var shoppingCartViewModel = new ShoppingCartViewModel
             {
                 ShoppingCart = shoppingCart,
-                ShoppingCartTotal = shoppingCart.GetShoppingCartTotal()
+                ShoppingCartTotal = shoppingCart.GetShoppingCartTotal(),
+                tempMessage = message
             };
 
             return View(shoppingCartViewModel);

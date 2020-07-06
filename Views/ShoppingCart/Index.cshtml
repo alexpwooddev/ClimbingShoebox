@@ -2,6 +2,12 @@
 
 <h2>Your shopping cart</h2>
 <br />
+
+@if (Model.tempMessage != null)
+{
+    <div class="alert alert-info text-center">@Model.tempMessage</div>
+}
+
 <table class="table table-bordered table-striped">
     <thead>
         <tr>

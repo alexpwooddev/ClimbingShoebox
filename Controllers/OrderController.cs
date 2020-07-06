@@ -22,7 +22,20 @@ namespace ClimbingShoebox.Controllers
         
         public IActionResult Checkout()
         {
-            return View();
+            var items = shoppingCart.GetShoppingCartItems();
+            shoppingCart.ShoppingCartItems = items;
+
+            if (shoppingCart.ShoppingCartItems.Count == 0)
+            {
+                TempData["emptyCartMessage"] = "Your cart is empty, add some shoes first";
+                return RedirectToAction("Index", "ShoppingCart");
+            }
+            else
+            {
+                return View();
+            }
+
+            
         }
 
         [HttpPost]
