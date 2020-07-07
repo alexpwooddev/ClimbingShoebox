@@ -23,6 +23,17 @@ a {
     border-color: #1861ac;
 }
 
+.btn-success {
+    background-color: #00887A;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+
+#favouriteCardButtons {
+    padding-left: 4px;
+}
+
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     color: #fff;
     background-color: #1b6ec2;

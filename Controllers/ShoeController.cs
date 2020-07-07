@@ -235,7 +235,7 @@ namespace ClimbingShoebox.Controllers
         [HttpPost]
         public IActionResult AddComment(int favouriteCollectionItemId)
         {
-            string comment = Request.Form["item.Comment"];
+            string comment = Request.Form["Comment"];
 
             favouritesCollection.SaveComment(services, favouriteCollectionItemId, comment);
 

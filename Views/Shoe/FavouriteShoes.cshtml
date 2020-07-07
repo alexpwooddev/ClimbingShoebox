@@ -13,11 +13,8 @@
 <div class="containerflex">
     @foreach (var item in Model.FavouritesCollection.FavouritesCollectionItems)
     {
-        <partial name="_FavouriteShoeCard" model="@item.Shoe" />
-        <form asp-action="AddComment" asp-route-favouriteCollectionItemId="@item.FavouritesCollectionItemId" method="post" role="form">
-            <textarea asp-for="@item.Comment"></textarea>
-            <input type="submit" value="Save comment" />
-        </form>
+        <partial name="_FavouriteShoeCard" model="@item" />
+        
         
     }
 </div>
