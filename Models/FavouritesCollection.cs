@@ -55,7 +55,8 @@ namespace ClimbingShoebox.Models
                 {
                     Shoe = shoe,
                     ShoeId = shoe.ShoeId,
-                    ApplicationUserId = userId
+                    ApplicationUserId = userId,
+                    Comment = "Add your comments here"
                 };
 
                 appDbContext.FavouritesCollectionItems.Add(favouritesCollectionItem);
@@ -91,6 +92,20 @@ namespace ClimbingShoebox.Models
                 Where(c => c.ApplicationUserId == userId)
                 .Include(s => s.Shoe)
                 .ToList());
+        }
+
+
+        public void SaveComment(IServiceProvider services, int favouritesCollectionItemId, string comment)
+        {
+            var userId = services.GetRequiredService<IHttpContextAccessor>()?.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var favouritesCollectionItem = appDbContext.FavouritesCollectionItems.SingleOrDefault
+                (c => c.FavouritesCollectionItemId == favouritesCollectionItemId);
+
+            favouritesCollectionItem.Comment = comment;
+
+            appDbContext.FavouritesCollectionItems.Update(favouritesCollectionItem);
+            appDbContext.SaveChanges();
+            
         }
     }
 }

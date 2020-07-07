@@ -16,6 +16,8 @@ namespace ClimbingShoebox.Models
         [ForeignKey("ShoeId")]
         public int ShoeId { get; set; }
 
+        public string Comment { get; set; }
+
         [ForeignKey("ApplicationUser")]
         public string ApplicationUserId { get; set; }
 

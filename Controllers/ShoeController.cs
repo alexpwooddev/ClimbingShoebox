@@ -231,5 +231,15 @@ namespace ClimbingShoebox.Controllers
 
             return RedirectToAction("FavouriteShoes");
         }
+
+        [HttpPost]
+        public IActionResult AddComment(int favouriteCollectionItemId)
+        {
+            string comment = Request.Form["item.Comment"];
+
+            favouritesCollection.SaveComment(services, favouriteCollectionItemId, comment);
+
+            return RedirectToAction("FavouriteShoes");
+        }
     }
 }
