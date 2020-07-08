@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ClimbingShoebox.Models;
+using ClimbingShoebox.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,11 +13,16 @@ namespace ClimbingShoebox.Controllers
     public class OrderController : Controller
     {
         private readonly IOrderRepository orderRepository;
+        private readonly IOrderDetailRepository orderDetailRepository;
+        private readonly IServiceProvider services;
         private readonly ShoppingCart shoppingCart;
 
-        public OrderController(IOrderRepository orderRepository, ShoppingCart shoppingCart)
+        public OrderController(IOrderRepository orderRepository, IOrderDetailRepository orderDetailRepository, 
+            IServiceProvider services, ShoppingCart shoppingCart)
         {
             this.orderRepository = orderRepository;
+            this.orderDetailRepository = orderDetailRepository;
+            this.services = services;
             this.shoppingCart = shoppingCart;
         }
         
@@ -62,6 +68,20 @@ namespace ClimbingShoebox.Controllers
         {
             ViewBag.CheckoutCompleteMessage = "Thanks for your order.";
             return View();
+        }
+
+        public IActionResult PastOrders()
+        {
+            //need to get OrderDetails for the current user and order them by OrderId
+            List<OrderDetail> currentUserOrderDetails = orderDetailRepository.OrderDetailsForCurrentUser(services).ToList();
+
+            //need to present these in some view to the user
+            return View(new PastOrdersViewModel
+            {
+                CurrentUserOrders = currentUserOrderDetails
+            });
+
+            
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,5 +15,12 @@ namespace ClimbingShoebox.Models
         public decimal Price { get; set; }
         public Shoe Shoe { get; set; }
         public Order Order { get; set; }
+
+        [ForeignKey("ApplicationUser")]
+        public string ApplicationUserId { get; set; }
+
+        public ApplicationUser ApplicationUser { get; set; }
+
+
     }
 }

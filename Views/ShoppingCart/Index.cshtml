@@ -8,7 +8,7 @@
     <div class="alert alert-info text-center">@Model.tempMessage</div>
 }
 
-<table class="table table-bordered table-striped">
+<table class="table table-light table-striped">
     <thead>
         <tr>
             <th class="text-center">Selected amount</th>
@@ -21,10 +21,10 @@
         @foreach (var line in Model.ShoppingCart.ShoppingCartItems)
         {
             <tr>
-                <td class="text-center text-light">@line.Amount</td>
-                <td class="text-left text-light">@line.Shoe.Name</td>
-                <td class="text-right text-light">@line.Shoe.Price.ToString("c")</td>
-                <td class="text-right text-light">
+                <td class="text-center">@line.Amount</td>
+                <td class="text-left">@line.Shoe.Name</td>
+                <td class="text-right">@line.Shoe.Price.ToString("c")</td>
+                <td class="text-right">
                     @((line.Amount * line.Shoe.Price).ToString("c"))
                 </td>
                 <td class="btn">

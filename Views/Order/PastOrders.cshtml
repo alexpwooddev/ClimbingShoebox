@@ -1,0 +1,33 @@
+﻿@model PastOrdersViewModel
+
+
+<h3>Your previous orders:</h3>
+@if (Model.CurrentUserOrders.Count() != 0)
+{
+    <table class="table table-light table-striped">
+        <thead>
+            <tr>
+                <th>Shoe</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var o in Model.CurrentUserOrders)
+            {
+                <tr>
+                    <td>@o.Shoe.Name</td>
+                    <td>@o.Amount</td>
+                    <td>@o.Price.ToString("c")</td>
+                </tr>
+            }
+        </tbody>
+
+
+    </table>
+}
+else
+{
+    <h3>You haven't purchased anything before</h3>
+}
+

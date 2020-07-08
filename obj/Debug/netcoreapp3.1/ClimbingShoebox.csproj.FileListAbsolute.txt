@@ -183,3 +183,4 @@ C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\Cli
 C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\ClimbingShoebox.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\ConfirmEmail.cshtml.g.cs
 C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\ForgotPassword.cshtml.g.cs
+C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\Razor\Views\Order\PastOrders.cshtml.g.cs
