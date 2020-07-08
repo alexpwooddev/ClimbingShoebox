@@ -284,7 +284,17 @@ namespace ClimbingShoebox.Controllers
             foreach (var shoe in shoes)
             {
                 IEnumerable<int> currentShoeRatings = ratingEntries.Where(e => e.ShoeId == shoe.ShoeId).Select(e => e.Rating);
-                double overallRating = currentShoeRatings.Sum() / currentShoeRatings.Count();
+                double overallRating;
+
+                if (currentShoeRatings.Count() != 0)
+                {
+                    overallRating = currentShoeRatings.Sum() / currentShoeRatings.Count();
+                }
+                else
+                {
+                    overallRating = 5; //i.e. new shoes automatically get a 5
+                }
+                
 
                 ratedShoes.Add(new RatedShoe
                 {
