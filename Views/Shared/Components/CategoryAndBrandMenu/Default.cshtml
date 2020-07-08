@@ -8,7 +8,7 @@
         @foreach (var category in Model.Categories)
         {
             <li>
-                <a asp-controller="Shoe" asp-action="List"
+                <a class="text-dark" asp-controller="Shoe" asp-action="List"
                    asp-route-categoryOrBrand="@category.CategoryName">@category.CategoryName</a>
             </li>
         }
@@ -16,14 +16,14 @@
         @foreach (var brand in Model.Brands)
         {
             <li>
-                <a asp-controller="Shoe" asp-action="List"
+                <a class="text-dark" asp-controller="Shoe" asp-action="List"
                    asp-route-categoryOrBrand="@brand.BrandName">@brand.BrandName</a>
             </li>
 
         }
         <li class="dropdown-divider"></li>
         <li>
-            <a asp-controller="Shoe" asp-action="List" asp-route-categoryOrBrand="">All Shoes</a>
+            <a class="text-dark" asp-controller="Shoe" asp-action="List" asp-route-categoryOrBrand="">All Shoes</a>
         </li>
 
     </ul>
