@@ -21,6 +21,8 @@ namespace ClimbingShoebox.Models
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<FavouritesCollectionItem> FavouritesCollectionItems { get; set; }
+        public DbSet<RatingEntry> RatingEntries { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

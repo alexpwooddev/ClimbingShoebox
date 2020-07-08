@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
@@ -19,22 +20,28 @@ namespace ClimbingShoebox.Controllers
         private readonly IBrandRepository brandRepository;
         private readonly FavouritesCollection favouritesCollection;
         private readonly IServiceProvider services;
+        private readonly IRatingEntryRepository ratingEntryRepository;
 
-        public ShoeController(IShoeRepository shoeRepository, ICategoryRepository categoryRepository, 
-            IBrandRepository brandRepository, FavouritesCollection favouritesCollection, IServiceProvider services)
+        public ShoeController(IShoeRepository shoeRepository, ICategoryRepository categoryRepository,
+            IBrandRepository brandRepository, FavouritesCollection favouritesCollection, IServiceProvider services
+            , IRatingEntryRepository ratingEntryRepository)
         {
             this.shoeRepository = shoeRepository;
             this.categoryRepository = categoryRepository;
             this.brandRepository = brandRepository;
             this.favouritesCollection = favouritesCollection;
             this.services = services;
+            this.ratingEntryRepository = ratingEntryRepository;
         }
 
         public IActionResult List(string categoryOrBrand, string ascendingOrDescending)
         {
             IEnumerable<Shoe> shoes;
+            IEnumerable<RatingEntry> ratingEntries = ratingEntryRepository.AllRatings;
+            List<RatedShoe> ratedShoes = new List<RatedShoe>();
+
             string currentCategoryOrBrand;
-            
+
 
             //No Category or Brand and no ascending/descending selection - i.e. just all shoes
             if (string.IsNullOrEmpty(categoryOrBrand) && string.IsNullOrEmpty(ascendingOrDescending))
@@ -42,10 +49,14 @@ namespace ClimbingShoebox.Controllers
                 shoes = shoeRepository.AllShoes.OrderBy(s => s.ShoeId);
                 currentCategoryOrBrand = "All shoes";
 
+                //add all RatedShoe objects to my ratedShoes List 
+                ratedShoes = CreateRatedShoeList(shoes, ratingEntries, ratedShoes);
+
                 return View(new ShoesListViewModel
                 {
                     Shoes = shoes,
                     CurrentCategoryOrBrand = currentCategoryOrBrand,
+                    RatedShoes = ratedShoes
                 });
             }
 
@@ -62,10 +73,13 @@ namespace ClimbingShoebox.Controllers
                     shoes = shoeRepository.AllShoes.OrderByDescending(s => s.Price);
                 }
 
+                ratedShoes = CreateRatedShoeList(shoes, ratingEntries, ratedShoes);
+
                 return View(new ShoesListViewModel
                 {
                     Shoes = shoes,
-                    CurrentCategoryOrBrand = currentCategoryOrBrand
+                    CurrentCategoryOrBrand = currentCategoryOrBrand,
+                    RatedShoes = ratedShoes
                 });
 
             }
@@ -135,12 +149,13 @@ namespace ClimbingShoebox.Controllers
                 }
             }
 
-
+            ratedShoes = CreateRatedShoeList(shoes, ratingEntries, ratedShoes);
 
             return View(new ShoesListViewModel
             {
                 Shoes = shoes,
-                CurrentCategoryOrBrand = currentCategoryOrBrand
+                CurrentCategoryOrBrand = currentCategoryOrBrand,
+                RatedShoes = ratedShoes
             });
         }
 
@@ -205,9 +220,9 @@ namespace ClimbingShoebox.Controllers
                 {
                     FavouritesCollection = favouritesCollection,
                     tempMessage = message
-                });     
+                });
             }
-        
+
         }
 
         public IActionResult NoFavourites()
@@ -215,7 +230,7 @@ namespace ClimbingShoebox.Controllers
             return View();
         }
 
- 
+
         public IActionResult AddToFavourite(int shoeId)
         {
             favouritesCollection.AddToCollection(services, shoeId);
@@ -241,5 +256,45 @@ namespace ClimbingShoebox.Controllers
 
             return RedirectToAction("FavouriteShoes");
         }
+
+
+        public IActionResult AddRatingEntry(string shoeId, string rating)
+        {
+            string referrer = Request.Headers["Referer"].ToString();
+
+            int shoeIdInt = Int32.Parse(shoeId);
+            int ratingInt = Int32.Parse(rating);
+            
+            if(!ratingEntryRepository.AddShoeRating(services, shoeIdInt, ratingInt))
+            {
+                TempData["alreadyRatedMessage"] = "You can't rate the same shoes twice!";
+            }
+
+
+            return Redirect(referrer);
+        }
+
+
+
+
+
+        public static List<RatedShoe> CreateRatedShoeList(IEnumerable<Shoe> shoes, IEnumerable<RatingEntry> ratingEntries, 
+            List<RatedShoe> ratedShoes)
+        {
+            foreach (var shoe in shoes)
+            {
+                IEnumerable<int> currentShoeRatings = ratingEntries.Where(e => e.ShoeId == shoe.ShoeId).Select(e => e.Rating);
+                double overallRating = currentShoeRatings.Sum() / currentShoeRatings.Count();
+
+                ratedShoes.Add(new RatedShoe
+                {
+                    OverallRating = overallRating,
+                    ShoeId = shoe.ShoeId,
+                    Shoe = shoe
+                });
+            }
+            return ratedShoes;
+        }
+
     }
 }

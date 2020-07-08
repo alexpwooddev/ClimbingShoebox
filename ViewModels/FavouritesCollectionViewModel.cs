@@ -1,4 +1,5 @@
 ﻿using ClimbingShoebox.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace ClimbingShoebox.ViewModels
     {
         public FavouritesCollection FavouritesCollection { get; set; }
 
+        [TempData]
         public string tempMessage { get; set; }
 
 

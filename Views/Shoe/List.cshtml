@@ -7,6 +7,11 @@
 <h1>@Model.CurrentCategoryOrBrand</h1>
 <br />
 
+@if (TempData.ContainsKey("alreadyRatedMessage"))
+{
+    <div class="alert alert-info text-center">@TempData["alreadyRatedMessage"]</div>
+}
+
 <a class="dropdown-toggle nav-link text-light" data-toggle="dropdown">Sort by price</a>
 <ul class="dropdown-menu">
     <li>
@@ -21,9 +26,10 @@
 
 
 <div class="containerflex">
-    @foreach (var shoe in Model.Shoes)
+    @foreach (var ratedShoe in Model.RatedShoes)
     {
-        <partial name="_ShoeCard" model="shoe" />
+        <partial name="_ShoeCard" model="ratedShoe" />
+
     }
 </div>
 

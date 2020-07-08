@@ -1,30 +1,53 @@
-﻿@model Shoe
+﻿@using Microsoft.AspNetCore.Components.Web
+@model RatedShoe
 
-    <div class="card">
-        <img class="card-img-top" src="@Model.ImageThumbnailUrl" alt="" />
-        <div class="card-body">
-            <h3 class="card-subtitle">@Model.Price.ToString("c")</h3>
-            <h3 class="card-title">
-                <a asp-controller="Shoe"
-                   asp-action="Details"
-                   asp-route-shoeId="@Model.ShoeId">@Model.Name</a>
-            </h3>
-            <p class="card-text">@Model.ShortDescription</p>
-        </div>
-        <div>
-            <p class="btn">
-                <a class="btn btn-primary"
-                   asp-controller="ShoppingCart"
-                   asp-action="AddToShoppingCart"
-                   asp-route-shoeId="@Model.ShoeId">Add to cart</a>
-            </p>
-            <p class="btn">
-                <a class="btn btn-primary"
-                   asp-controller="Shoe"
-                   asp-action="AddToFavourite"
-                   asp-route-shoeId="@Model.ShoeId">Favourite this shoe!</a>
-            </p>
-        </div>
+<div class="card">
+    <img class="card-img-top" src="@Model.Shoe.ImageThumbnailUrl" alt="" />
+    <div class="card-body">
+        <h3 class="card-subtitle">@Model.Shoe.Price.ToString("c")</h3>
+        <h3 class="card-title">
+            <a asp-controller="Shoe"
+               asp-action="Details"
+               asp-route-shoeId="@Model.Shoe.ShoeId">@Model.Shoe.Name</a>
+        </h3>
+        <h6>User rating:<br /> (click to add your rating)</h6>
+        @for (int i = 1; i < 6; i++)
+        {
+            var data = new Dictionary<string, string>
+            {
+                    {"shoeId", Model.Shoe.ShoeId.ToString() },
+                    {"rating", i.ToString() }
+                };
 
-
+            var currentStar = i;
+            if (i <= Model.OverallRating)
+            {
+                <a asp-controller="Shoe" asp-action="AddRatingEntry"
+                   asp-all-route-data="data"><i class="fa fa-star"></i></a>
+            }
+            else
+            {
+                <a asp-controller="Shoe" asp-action="AddRatingEntry"
+                   asp-all-route-data="data"><i class="far fa-star"></i></a>
+            }
+        }
+        <hr />
+        <p class="card-text">@Model.Shoe.ShortDescription</p>
     </div>
+    <div>
+        <p class="btn">
+            <a class="btn btn-primary"
+               asp-controller="ShoppingCart"
+               asp-action="AddToShoppingCart"
+               asp-route-shoeId="@Model.Shoe.ShoeId">Add to cart</a>
+        </p>
+        <p class="btn">
+            <a class="btn btn-primary"
+               asp-controller="Shoe"
+               asp-action="AddToFavourite"
+               asp-route-shoeId="@Model.Shoe.ShoeId">Favourite this shoe!</a>
+        </p>
+    </div>
+
+
+</div>
