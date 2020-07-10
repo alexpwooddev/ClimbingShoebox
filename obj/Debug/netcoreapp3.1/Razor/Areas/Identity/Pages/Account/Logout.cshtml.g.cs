@@ -20,13 +20,6 @@ using Microsoft.AspNetCore.Identity;
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "C:\Users\Alexander Wood\source\repos\ClimbingShoebox\Areas\Identity\Pages\_ViewImports.cshtml"
-using ClimbingShoebox.Areas.Identity;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
 #line 3 "C:\Users\Alexander Wood\source\repos\ClimbingShoebox\Areas\Identity\Pages\_ViewImports.cshtml"
 using ClimbingShoebox.Areas.Identity.Pages;
 
@@ -40,9 +33,16 @@ using ClimbingShoebox.Areas.Identity.Pages.Account;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 2 "C:\Users\Alexander Wood\source\repos\ClimbingShoebox\Areas\Identity\Pages\Account\_ViewImports.cshtml"
+using ClimbingShoebox.Areas.Identity;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"acf321d273a4b4dd8650c17231b06987dc03df69", @"/Areas/Identity/Pages/Account/Logout.cshtml")]
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"16972dcce578e07221f29301894e3dd85e2bfd58", @"/Areas/Identity/Pages/_ViewImports.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"05f78443f932b6335201c916c082ada6e3163657", @"/Areas/Identity/Pages/Account/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"e2b5fec256209111d53ca774616188b290b49cd4", @"/Areas/Identity/Pages/Account/_ViewImports.cshtml")]
     public class Areas_Identity_Pages_Account_Logout : global::Microsoft.AspNetCore.Mvc.RazorPages.Page
     {
         #pragma warning disable 1998

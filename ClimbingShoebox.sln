@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClimbingShoebox", "ClimbingShoebox.csproj", "{6B9017CC-6822-4FD5-B8D4-68CE579150D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClimbingShoebox", "ClimbingShoebox.csproj", "{6B9017CC-6822-4FD5-B8D4-68CE579150D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

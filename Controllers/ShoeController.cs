@@ -269,6 +269,10 @@ namespace ClimbingShoebox.Controllers
             {
                 TempData["alreadyRatedMessage"] = "You can't rate the same shoes twice!";
             }
+            else
+            {
+                TempData["ratingSubmittedMessage"] = "Thanks for your rating!";
+            }
 
 
             return Redirect(referrer);

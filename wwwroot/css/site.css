@@ -40,6 +40,10 @@ a {
     border-color: #1861ac;
 }
 
+#logout {
+    padding-left: 0px;
+}
+
 
 .navbar-nav > li {
     padding-left: 5px;
@@ -49,6 +53,7 @@ a {
 .dropdown-menu {
     padding-left: 6px;
 }
+
 
 
 
@@ -67,6 +72,7 @@ html {
 body {
     background-color: #77A6F7;
     color: #FFFFFF;
+    margin-bottom: 60px;
 }
 
 .border-top {
@@ -93,10 +99,6 @@ html {
     min-height: 100%;
 }
 
-body {
-    /* Margin bottom by footer height */
-    margin-bottom: 60px;
-}
 
 .footer {
     position: absolute;
@@ -106,11 +108,14 @@ body {
     line-height: 60px; /* Vertically center the text there */
 }
 
+
+
 h1, h2 {
     text-align: center;
 }
 
-p{
+p, #email, #change-password, #two-factor, #profile
+, #personal-data{
     color: #FFFFFF;
 }
 

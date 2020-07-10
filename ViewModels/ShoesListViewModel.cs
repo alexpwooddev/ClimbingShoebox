@@ -15,8 +15,5 @@ namespace ClimbingShoebox.ViewModels
 
         public List<RatedShoe> RatedShoes { get; set; }
 
-        [TempData]
-        public string tempMessage { get; set; }
-
     }
 }

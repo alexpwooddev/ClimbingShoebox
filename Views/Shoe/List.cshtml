@@ -11,6 +11,10 @@
 {
     <div class="alert alert-info text-center">@TempData["alreadyRatedMessage"]</div>
 }
+@if (TempData.ContainsKey("ratingSubmittedMessage"))
+{
+    <div class="alert alert-info text-center">@TempData["ratingSubmittedMessage"]</div>
+}
 
 <a class="dropdown-toggle nav-link text-light" data-toggle="dropdown">Sort by price</a>
 <ul class="dropdown-menu">

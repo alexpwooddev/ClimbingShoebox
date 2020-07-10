@@ -28,7 +28,23 @@ namespace ClimbingShoebox.Controllers
             return View(homeViewModel);
         }
 
-   
+        public IActionResult AboutUs()
+        {
+            return View();
+        }
+
+        public IActionResult Help()
+        {
+            return View();
+        }
+
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

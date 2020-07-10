@@ -5,6 +5,12 @@
     <UserSecretsId>ac383abd-eafc-42d1-927d-4e8656efc02e</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Areas\Identity\Pages\Account\Manage\**" />
+    <Content Remove="Areas\Identity\Pages\Account\Manage\**" />
+    <EmbeddedResource Remove="Areas\Identity\Pages\Account\Manage\**" />
+    <None Remove="Areas\Identity\Pages\Account\Manage\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Remove="Migrations\20200701191331_ApplicationUserAdded.cs" />
     <Compile Remove="Migrations\20200701191331_ApplicationUserAdded.Designer.cs" />
     <Compile Remove="Migrations\20200701193945_reConfigIdentityWithApplicationUser.cs" />

@@ -17,15 +17,18 @@
             <a id="manage" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" class="dropdown-toggle nav-link text-dark" data-toggle="dropdown"><i class="fa fa-user"></i>  @fullName</a>
             <ul class="dropdown-menu">
                 <li>
-                    <a class="text-dark" asp-controller="Order" asp-action="PastOrders">Order History</a>
+                    <a class="text-dark" asp-controller="Order" asp-action="PastOrders">Order History</a>                       
+                </li>
+                <li>
                     <a class="text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Manage Account</a>
                 </li>
+                <li class="dropdown-divider"></li>
+                <li>
+                    <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                    </form>
+                </li>
             </ul>
-        </li>
-        <li class="nav-item">
-            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-            </form>
         </li>
     }
     else
