@@ -1,0 +1,13 @@
+﻿@model RatingCountViewModel
+
+@if (Model.RatingCount > 0)
+{
+    if (Model.RatingCount == 1)
+    {
+        <p class="text-muted">(@Model.RatingCount rating)</p>
+    }
+    else
+    {
+        <p class="text-muted">(@Model.RatingCount ratings)</p>
+    }
+}

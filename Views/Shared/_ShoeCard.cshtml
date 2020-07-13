@@ -30,7 +30,7 @@
                 <a asp-controller="Shoe" asp-action="AddRatingEntry"
                    asp-all-route-data="data"><i class="far fa-star"></i></a>
             }
-        }
+        } @await Component.InvokeAsync("RatingCount", new { shoeId = Model.Shoe.ShoeId }) 
         <hr />
         <p class="card-text">@Model.Shoe.ShortDescription</p>
     </div>

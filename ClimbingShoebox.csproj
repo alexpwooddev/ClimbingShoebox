@@ -33,6 +33,8 @@
     <Compile Remove="Migrations\20200707220653_AddRatedShoeDomainModel.Designer.cs" />
     <Compile Remove="Migrations\20200707220853_AddRatedShoeDomainModel.cs" />
     <Compile Remove="Migrations\20200707220853_AddRatedShoeDomainModel.Designer.cs" />
+    <Compile Remove="Migrations\20200710220957_ChangedAnasaziImage.cs" />
+    <Compile Remove="Migrations\20200710220957_ChangedAnasaziImage.Designer.cs" />
     <Compile Remove="Models\MockData NotInUse\MockBrandRepository.cs" />
     <Compile Remove="Models\MockData NotInUse\MockCategoryRepository.cs" />
     <Compile Remove="Models\MockData NotInUse\MockShoeRepository.cs" />
