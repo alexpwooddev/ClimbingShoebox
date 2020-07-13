@@ -20,20 +20,20 @@
 <a class="dropdown-toggle nav-link text-light" data-toggle="dropdown">Sort by:</a>
 <ul class="dropdown-menu">
     <li>
-        <a asp-controller="Shoe" asp-action="List" asp-route-sortBy="ascendingByRating"
+        <a class="text-dark" asp-controller="Shoe" asp-action="List" asp-route-sortBy="ascendingByRating"
            asp-route-categoryOrBrand="@Model.CurrentCategoryOrBrand">User Rating: Low to high</a>
     </li>
     <li>
-        <a asp-controller="Shoe" asp-action="List" asp-route-sortBy="descendingByRating"
+        <a class="text-dark" asp-controller="Shoe" asp-action="List" asp-route-sortBy="descendingByRating"
            asp-route-categoryOrBrand="@Model.CurrentCategoryOrBrand">User Rating: High to low</a>
     </li>
     <li class="dropdown-divider"></li>
     <li>
-        <a asp-controller="Shoe" asp-action="List" asp-route-sortBy="ascendingByPrice"
+        <a class="text-dark" asp-controller="Shoe" asp-action="List" asp-route-sortBy="ascendingByPrice"
            asp-route-categoryOrBrand="@Model.CurrentCategoryOrBrand">Price: Low to high</a>
     </li>
     <li>
-        <a asp-controller="Shoe" asp-action="List" asp-route-sortBy="descendingByPrice"
+        <a class="text-dark" asp-controller="Shoe" asp-action="List" asp-route-sortBy="descendingByPrice"
            asp-route-categoryOrBrand="@Model.CurrentCategoryOrBrand">Price: High to low</a>
     </li>
 </ul>
