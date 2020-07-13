@@ -7,8 +7,8 @@
 <h1>@Model.CurrentCategoryOrBrand</h1>
 <br />
 <div class="card-columns">
-    @foreach (var shoe in Model.Shoes)
+    @foreach (var ratedShoe in Model.RatedShoes)
     {
-        <partial name="_ShoeCard" model="shoe" />
+        <partial name="_ShoeCard" model="ratedShoe" />
     }
 </div>
