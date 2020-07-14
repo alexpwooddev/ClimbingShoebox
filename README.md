@@ -1,19 +1,19 @@
 # ClimbingShoebox
-Description: Practice of MVC pattern in ASP.NET Core and using SQL Server
-Credit: core features were designed based on Gill Cleeren's "Build web applications with ASP.NET Core MVC" course on Pluralsight.com
+Description: E-commerce site using ASP.NET Core MVC, SQL Server and Bootstrap4
+Credit: some core features (including basic presentation of products on cards and the shopping cart and order implementation) were designed based on Gill Cleeren's "Build web applications with ASP.NET Core MVC" course on Pluralsight.com
 
 Entirely additional features added by me:
-- Additional domain entity: brand
-- Remove cart items functionality
-- Locations page with Google Map 
-- Product search functionality
-- Sort products by price funcionality
+- Product search 
+- Sort products by price and rating
+- "Add to favourites" (i.e. users can favourite a product and see a page presenting their favourited products)
+- Add comments to favourited products
+- User rating of products
+- Order history
+- Remove item from cart 
+- Store locations page with Google Map
+- Organisation of products by brand
 
-Usage: Users can:
-- register and login (required to place orders)
-- search for products
-- browse products by activity type and brand
-- sort products by price
-- view extra product details
-- add and remove products from cart
-- place orders from their cart
+Note: 
+- this uses Asp.net Identity Code First migration. You can compile the app and run: 'update-database' from the package manager console and then run the app.
+- this uses SendGrid for email confirmation for account sign-up. To see all the features of the app you will need to setup your own SendGrid user and ApiKey, or simply remove this feature.
+- this is NOT the final production version of the app - it is a work in progress!
