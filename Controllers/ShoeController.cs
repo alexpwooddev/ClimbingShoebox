@@ -36,6 +36,10 @@ namespace ClimbingShoebox.Controllers
 
         public IActionResult List(string categoryOrBrand, string sortBy)
         {
+            
+            
+            
+            
             IEnumerable<RatingEntry> ratingEntries = ratingEntryRepository.AllRatings;
             List<RatedShoe> ratedShoes = new List<RatedShoe>();
             ratedShoes = CreateRatedShoeList(shoeRepository.AllShoes, ratingEntries, ratedShoes).ToList();
@@ -54,7 +58,7 @@ namespace ClimbingShoebox.Controllers
             }
 
             //No Category/Brand but ascending/descending selected
-            else if (categoryOrBrand == "All shoes")
+            else if (string.IsNullOrEmpty(categoryOrBrand) && !string.IsNullOrEmpty(sortBy))
             {
                 if (sortBy == "ascendingByPrice")
                 {
@@ -165,7 +169,7 @@ namespace ClimbingShoebox.Controllers
             }
             else
             {
-                shoes = shoeRepository.GetShoesByName(query);
+                shoes = shoeRepository.GetShoesByNameOrBrandOrCategory(query);
             }
 
             IEnumerable<RatingEntry> ratingEntries = ratingEntryRepository.AllRatings;
