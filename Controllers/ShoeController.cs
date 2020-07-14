@@ -36,7 +36,6 @@ namespace ClimbingShoebox.Controllers
 
         public IActionResult List(string categoryOrBrand, string sortBy)
         {
-            //IEnumerable<Shoe> shoes;
             IEnumerable<RatingEntry> ratingEntries = ratingEntryRepository.AllRatings;
             List<RatedShoe> ratedShoes = new List<RatedShoe>();
             ratedShoes = CreateRatedShoeList(shoeRepository.AllShoes, ratingEntries, ratedShoes).ToList();
@@ -245,7 +244,6 @@ namespace ClimbingShoebox.Controllers
             return RedirectToAction("FavouriteShoes");
         }
 
-        [HttpPost]
         public IActionResult AddComment(int favouriteCollectionItemId)
         {
             string comment = Request.Form["Comment"];
@@ -275,9 +273,6 @@ namespace ClimbingShoebox.Controllers
 
             return Redirect(referrer);
         }
-
-
-
 
 
         public static List<RatedShoe> CreateRatedShoeList(IEnumerable<Shoe> shoes, IEnumerable<RatingEntry> ratingEntries, 

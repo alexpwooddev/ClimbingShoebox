@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ClimbingShoebox.Controllers
 {
-    public class StoreLocations : Controller
+    public class StoreLocationsController : Controller
     {
         public IActionResult Index()
         {
