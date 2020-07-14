@@ -40,6 +40,9 @@ namespace ClimbingShoebox.Models
             modelBuilder.Entity<Brand>().HasData(new Brand { BrandId = 3, BrandName = "Five-Ten" });
 
 
+
+
+            //seed shoes
             modelBuilder.Entity<Shoe>().HasData(new Shoe
             {
                 ShoeId = 1,
