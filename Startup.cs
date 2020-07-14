@@ -21,6 +21,8 @@ namespace ClimbingShoebox
 {
     public class Startup
     {
+        //private string _SendGridKey = null;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -31,6 +33,8 @@ namespace ClimbingShoebox
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //_SendGridKey = Configuration["SendGridKey"];
+            
             services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
