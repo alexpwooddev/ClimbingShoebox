@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
+using System.Text;
 
 namespace ClimbingShoebox.Controllers
 {
@@ -34,14 +35,60 @@ namespace ClimbingShoebox.Controllers
             this.ratingEntryRepository = ratingEntryRepository;
         }
 
-        public IActionResult List(string categoryOrBrand, string sortBy)
+        public IActionResult List(string categoryOrBrand, string sortBy, string query)
         {
-            
-            
-            
-            
             IEnumerable<RatingEntry> ratingEntries = ratingEntryRepository.AllRatings;
             List<RatedShoe> ratedShoes = new List<RatedShoe>();
+
+            //this gets me the search results presented on the List controller correctly, but then, when I select a sortBy option, I have
+            //no way of persisting the data of which shoes have been found by the query unless I use the categoryOrBrand data, which is currently
+            //set to "Search results for ________(the last query)"
+            //if categoryOrBrand != null && !=(a Brand or Category from the DB) THEN there's a search query - in that case use part of the Search
+            //method to get ratedShoes filled with the correct shoes from the search THEN order them based on the orderBy selection
+
+            if (!string.IsNullOrEmpty(query))
+            {
+                return View(Search(query, ratingEntries, ratedShoes));                
+            }
+
+            //after an initial search, then user selects a sortBy option
+            if (categoryOrBrand != null && shoeRepository.AllShoes.FirstOrDefault(s => s.Category.CategoryName == categoryOrBrand)?.ShoeId == null &&
+                shoeRepository.AllShoes.FirstOrDefault(s => s.Brand.BrandName == categoryOrBrand)?.ShoeId == null)
+            {
+                var categoryOrBrandArray = categoryOrBrand.Split(" ");
+                var queryIsolated = categoryOrBrandArray[3];
+                IEnumerable<Shoe> shoes = shoeRepository.GetShoesByNameOrBrandOrCategory(queryIsolated);
+                ratedShoes = CreateRatedShoeList(shoes, ratingEntries, ratedShoes).ToList();
+
+                if (sortBy == "ascendingByPrice")
+                {
+                    ratedShoes = ratedShoes.OrderBy(s => s.Shoe.Price).ToList();
+                }
+                else if (sortBy == "descendingByPrice")
+                {
+                    ratedShoes = ratedShoes.OrderByDescending(s => s.Shoe.Price).ToList();
+                }
+                else if (sortBy == "ascendingByRating")
+                {
+                    ratedShoes = ratedShoes.OrderBy(s => s.OverallRating).ToList();
+                }
+                else
+                {
+                    ratedShoes = ratedShoes.OrderByDescending(s => s.OverallRating).ToList();
+                }
+
+                return View(new ShoesListViewModel
+                {
+                    CurrentCategoryOrBrand = categoryOrBrand,
+                    RatedShoes = ratedShoes
+                });
+
+            }
+
+
+
+
+            //no search query
             ratedShoes = CreateRatedShoeList(shoeRepository.AllShoes, ratingEntries, ratedShoes).ToList();
 
             //No Category or Brand and no ascending/descending selection - i.e. just all shoes
@@ -97,9 +144,9 @@ namespace ClimbingShoebox.Controllers
                     ratedShoes = ratedShoes.Where(s => s.Shoe.Category.CategoryName == categoryOrBrand).OrderBy(s => s.Shoe.ShoeId).ToList();
                 }
             }
-            
+
             //category/Brand selected AND sort selected
-            else 
+            else
             {
                 if (sortBy == "ascendingByPrice")
                 {
@@ -148,7 +195,7 @@ namespace ClimbingShoebox.Controllers
                         ratedShoes = ratedShoes.Where(s => s.Shoe.Category.CategoryName == categoryOrBrand).OrderByDescending(s => s.OverallRating).ToList();
                     }
                 }
-            }           
+            }
 
             return View(new ShoesListViewModel
             {
@@ -159,28 +206,16 @@ namespace ClimbingShoebox.Controllers
 
 
 
-        public IActionResult Search(string query)
+        private ShoesListViewModel Search(string query, IEnumerable<RatingEntry> ratingEntries, List<RatedShoe> ratedShoes)
         {
-            IEnumerable<Shoe> shoes;
-
-            if (string.IsNullOrEmpty(query))
-            {
-                shoes = shoeRepository.AllShoes.OrderBy(s => s.ShoeId);
-            }
-            else
-            {
-                shoes = shoeRepository.GetShoesByNameOrBrandOrCategory(query);
-            }
-
-            IEnumerable<RatingEntry> ratingEntries = ratingEntryRepository.AllRatings;
-            List<RatedShoe> ratedShoes = new List<RatedShoe>();
+            IEnumerable<Shoe> shoes = shoeRepository.GetShoesByNameOrBrandOrCategory(query);
             ratedShoes = CreateRatedShoeList(shoes, ratingEntries, ratedShoes).ToList();
 
-            return View(new ShoesListViewModel
+            return new ShoesListViewModel
             {
                 RatedShoes = ratedShoes,
                 CurrentCategoryOrBrand = $"Search results for {query}"
-            });
+            };
         }
 
 
@@ -264,8 +299,8 @@ namespace ClimbingShoebox.Controllers
 
             int shoeIdInt = Int32.Parse(shoeId);
             int ratingInt = Int32.Parse(rating);
-            
-            if(!ratingEntryRepository.AddShoeRating(services, shoeIdInt, ratingInt))
+
+            if (!ratingEntryRepository.AddShoeRating(services, shoeIdInt, ratingInt))
             {
                 TempData["alreadyRatedMessage"] = "You can't rate the same shoes twice!";
             }
@@ -279,7 +314,7 @@ namespace ClimbingShoebox.Controllers
         }
 
 
-        public static List<RatedShoe> CreateRatedShoeList(IEnumerable<Shoe> shoes, IEnumerable<RatingEntry> ratingEntries, 
+        public static List<RatedShoe> CreateRatedShoeList(IEnumerable<Shoe> shoes, IEnumerable<RatingEntry> ratingEntries,
             List<RatedShoe> ratedShoes)
         {
             foreach (var shoe in shoes)
@@ -294,7 +329,7 @@ namespace ClimbingShoebox.Controllers
                 else
                 {
                     overallRating = 5; //i.e. new shoes automatically get a 5
-                }             
+                }
 
                 ratedShoes.Add(new RatedShoe
                 {
