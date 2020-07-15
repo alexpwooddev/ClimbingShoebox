@@ -36,18 +36,8 @@ namespace ClimbingShoebox.Models
             return appDbContext.Shoes.FirstOrDefault(s => s.ShoeId == shoeId);
         }
 
-        public IEnumerable<Shoe> GetShoesByNameOrBrandOrCategory(string nameQuery)
-        {
-            return appDbContext.Shoes.Where(s => s.Name.Contains(nameQuery) || s.Brand.BrandName.Contains(nameQuery) ||
+        public IEnumerable<Shoe> GetShoesByNameOrBrandOrCategory(string nameQuery) => appDbContext.Shoes.Where(s => s.Name.Contains(nameQuery) || s.Brand.BrandName.Contains(nameQuery) ||
             s.Category.CategoryName.Contains(nameQuery) || string.IsNullOrEmpty(nameQuery));
-
-            /*
-            var queryList = from s in appDbContext.Shoes
-                            where s.Name.Contains(nameQuery) || string.IsNullOrEmpty(nameQuery)
-                            orderby s.Name
-                            select s;
-            return queryList;
-            */
-        }
+        
     }
 }
