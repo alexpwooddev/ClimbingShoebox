@@ -3,7 +3,7 @@
 @if (Model.FavouritesCollection.FavouritesCollectionItems.Count > 0)
 {
     <li>
-        <a asp-controller="Shoe" asp-action="FavouriteShoes" class="nav-link text-dark">
+        <a asp-controller="Shoe" asp-action="ListFavouriteShoes" class="nav-link text-dark">
             Favourited Shoes: <i class="fa fa-star"></i>
             <span id="cart-status">
                 (@Model.FavouritesCollection.FavouritesCollectionItems.Count)

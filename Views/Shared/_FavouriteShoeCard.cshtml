@@ -6,7 +6,7 @@
         <h3 class="card-subtitle">@Model.Shoe.Price.ToString("c")</h3>
         <h3 class="card-title">
             <a asp-controller="Shoe"
-               asp-action="Details"
+               asp-action="SelectedShoeDetails"
                asp-route-shoeId="@Model.Shoe.ShoeId">@Model.Shoe.Name</a>
         </h3>
         <p class="card-text">@Model.Shoe.ShortDescription</p>
@@ -30,7 +30,7 @@
         </div>
     </div>
     <div>
-        <form asp-action="AddComment" asp-route-favouriteCollectionItemId="@Model.FavouritesCollectionItemId"
+        <form asp-action="AddCommentToFavourite" asp-route-favouriteCollectionItemId="@Model.FavouritesCollectionItemId"
               method="post"
               role="form"
               class="container-fluid">

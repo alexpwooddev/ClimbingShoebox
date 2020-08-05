@@ -7,7 +7,7 @@
         <h3 class="card-subtitle">@Model.Shoe.Price.ToString("c")</h3>
         <h3 class="card-title">
             <a asp-controller="Shoe"
-               asp-action="Details"
+               asp-action="SelectedShoeDetails"
                asp-route-shoeId="@Model.Shoe.ShoeId">@Model.Shoe.Name</a>
         </h3>
         <h6>User rating:<br /> (click to add your rating)</h6>

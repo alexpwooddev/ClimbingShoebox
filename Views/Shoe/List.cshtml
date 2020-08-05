@@ -7,14 +7,19 @@
 <h1>@Model.CurrentCategoryOrBrand</h1>
 <br />
 
-@if (TempData.ContainsKey("alreadyRatedMessage"))
+@if (TempData.ContainsKey("ratingSubmissionMessage"))
 {
-    <div class="alert alert-info text-center">@TempData["alreadyRatedMessage"]</div>
+    <div class="alert alert-info text-center">@TempData["ratingSubmissionMessage"]</div>
 }
-@if (TempData.ContainsKey("ratingSubmittedMessage"))
-{
-    <div class="alert alert-info text-center">@TempData["ratingSubmittedMessage"]</div>
-}
+
+@*@if (TempData.ContainsKey("alreadyRatedMessage"))
+    {
+        <div class="alert alert-info text-center">@TempData["alreadyRatedMessage"]</div>
+    }
+    @if (TempData.ContainsKey("ratingSubmittedMessage"))
+    {
+        <div class="alert alert-info text-center">@TempData["ratingSubmittedMessage"]</div>
+    }*@
 
 
 <a class="dropdown-toggle nav-link text-light" data-toggle="dropdown">Sort by:</a>
