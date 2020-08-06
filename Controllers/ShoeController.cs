@@ -37,80 +37,43 @@ namespace ClimbingShoebox.Controllers
         }
 
         
-        public IActionResult List(string categoryOrBrand, string sortBy, string query)
+        public IActionResult ListShoes(string categoryOrBrand, string sortBy)
         {
             IEnumerable<RatingEntry> ratingEntries = ratingEntryRepository.AllRatings;
             List<RatedShoe> ratedShoes = new List<RatedShoe>();
-            int? matchCategoryInDb = shoeRepository.AllShoes.FirstOrDefault(s => s.Category.CategoryName == categoryOrBrand)?.ShoeId;
-            int? matchBrandInDb = shoeRepository.AllShoes.FirstOrDefault(s => s.Brand.BrandName == categoryOrBrand)?.ShoeId;
+            ratedShoes = CreateRatedShoeList(shoeRepository.AllShoes, ratingEntries, ratedShoes).ToList();                   
             
-            #region //List view from a search query
-            //initial List view resulting from a search query
-            if (!string.IsNullOrEmpty(query))
-            {
-                return View(Search(query, ratingEntries, ratedShoes));                
-            }
-
-            //after an initial search, then user selects a sortBy option
-            if (categoryOrBrand != null && matchCategoryInDb == null && matchBrandInDb == null)
-            {
-                SortBy sortByEnum = SortByStringToEnum(sortBy);
-                ratedShoes = ShowShoesWithSortByOption(ratedShoes, categoryOrBrand, ratingEntries, sortByEnum);
-
-                return View(new ShoesListViewModel
-                {
-                    CurrentCategoryOrBrand = categoryOrBrand,
-                    RatedShoes = ratedShoes
-                });
-
-            }
-            #endregion
-
-
-            #region//no search query - just presenting Shoes with category/brand and/or sorting
-
-            ratedShoes = CreateRatedShoeList(shoeRepository.AllShoes, ratingEntries, ratedShoes).ToList();
             bool NoCategoryOrBrandNorAscendingOrDescendingSelected = string.IsNullOrEmpty(categoryOrBrand) && string.IsNullOrEmpty(sortBy);
             bool AscendingOrDescendingButNoCategoryOrBrandSelected = string.IsNullOrEmpty(categoryOrBrand) && !string.IsNullOrEmpty(sortBy);
-
             
             if (NoCategoryOrBrandNorAscendingOrDescendingSelected) //i.e. just all shoes
             {
-                //add all RatedShoe objects to my ratedShoes List 
-                ratedShoes = ratedShoes.OrderBy(r => r.Shoe.ShoeId).ToList();
-
                 return View(new ShoesListViewModel
                 {
                     CurrentCategoryOrBrand = categoryOrBrand,
-                    RatedShoes = ratedShoes
-                });
+                    RatedShoes = ratedShoes.OrderBy(r => r.Shoe.ShoeId).ToList()
+            });
             }
 
             else if (AscendingOrDescendingButNoCategoryOrBrandSelected)
             {
                 SortBy sortByEnum = SortByStringToEnum(sortBy);
-                ratedShoes = ShowShoesAscendingOrDescendingWithNoCategoryOrBrand(ratedShoes, sortByEnum);
-
                 return View(new ShoesListViewModel
                 {
                     CurrentCategoryOrBrand = categoryOrBrand,
-                    RatedShoes = ratedShoes
-                });
+                    RatedShoes = ShowShoesAscendingOrDescendingWithNoCategoryOrBrand(ratedShoes, sortByEnum)
+            });
             }
 
             else
-            {
-                ratedShoes = ShowShoesWithCategoryOrBrandSelection(categoryOrBrand, ratedShoes, sortBy, matchCategoryInDb);
-
+            {             
                 return View(new ShoesListViewModel
                 {
                     CurrentCategoryOrBrand = categoryOrBrand,
-                    RatedShoes = ratedShoes
-                });
+                    RatedShoes = ShowShoesWithCategoryOrBrandSelection(categoryOrBrand, ratedShoes, sortBy)
+            });
             }
             
-            
-            #endregion
         }
 
         private SortBy SortByStringToEnum(string sortBy)
@@ -200,8 +163,10 @@ namespace ClimbingShoebox.Controllers
         }
 
 
-        private List<RatedShoe> ShowShoesWithCategoryOrBrandSelection(string categoryOrBrand, List<RatedShoe> ratedShoes, string sortBy, int? matchCategoryInDb)
+        private List<RatedShoe> ShowShoesWithCategoryOrBrandSelection(string categoryOrBrand, List<RatedShoe> ratedShoes, string sortBy)
         {
+            int? matchCategoryInDb = shoeRepository.AllShoes.FirstOrDefault(s => s.Category.CategoryName == categoryOrBrand)?.ShoeId;
+
             //Category/Brand selected but no sort selected
             if (categoryOrBrand != "All shoes" && string.IsNullOrEmpty(sortBy))
             {
@@ -279,16 +244,35 @@ namespace ClimbingShoebox.Controllers
 
 
 
-        private ShoesListViewModel Search(string query, IEnumerable<RatingEntry> ratingEntries, List<RatedShoe> ratedShoes)
+        public IActionResult ListSearchResults(string categoryOrBrand, string sortBy, string query)
         {
-            IEnumerable<Shoe> shoes = shoeRepository.GetShoesByNameOrBrandOrCategory(query);
-            ratedShoes = CreateRatedShoeList(shoes, ratingEntries, ratedShoes).ToList();
-
-            return new ShoesListViewModel
+            IEnumerable<RatingEntry> ratingEntries = ratingEntryRepository.AllRatings;
+            List<RatedShoe> ratedShoes = new List<RatedShoe>();
+          
+            bool isInitialSearch = !string.IsNullOrEmpty(query);
+            if (isInitialSearch)
             {
-                RatedShoes = ratedShoes,
-                CurrentCategoryOrBrand = $"Search results for {query}"
-            };
+                IEnumerable<Shoe> shoes = shoeRepository.GetShoesByNameOrBrandOrCategory(query);
+                ratedShoes = CreateRatedShoeList(shoes, ratingEntries, ratedShoes).ToList();
+
+                return View("ListSearchResults", new ShoesListViewModel
+                {
+                    RatedShoes = ratedShoes,
+                    CurrentCategoryOrBrand = $"Search results for {query}"
+                });
+            }
+
+            else 
+            {
+                SortBy sortByEnum = SortByStringToEnum(sortBy);
+                ratedShoes = ShowShoesWithSortByOption(ratedShoes, categoryOrBrand, ratingEntries, sortByEnum);
+
+                return View("ListSearchResults", new ShoesListViewModel
+                {
+                    CurrentCategoryOrBrand = categoryOrBrand,
+                    RatedShoes = ratedShoes
+                });
+            }
         }
 
 

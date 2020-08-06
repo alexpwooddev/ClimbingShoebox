@@ -60,7 +60,6 @@ C:\Users\Alexander Wood\source\repos\ClimbingShoebox\bin\Debug\netcoreapp3.1\run
 C:\Users\Alexander Wood\source\repos\ClimbingShoebox\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\Alexander Wood\source\repos\ClimbingShoebox\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\Alexander Wood\source\repos\ClimbingShoebox\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\Razor\Views\Shoe\List.cshtml.g.cs
 C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\ClimbingShoebox.Views.pdb
 C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\ClimbingShoebox.dll
 C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\ClimbingShoebox.pdb
@@ -188,3 +187,5 @@ C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\Cli
 C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\ClimbingShoebox.csprojAssemblyReference.cache
 C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\Razor\Views\Shoe\ListFavouriteShoes.cshtml.g.cs
 C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\Razor\Views\Shoe\SelectedShoeDetails.cshtml.g.cs
+C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\Razor\Views\Shoe\ListSearchResults.cshtml.g.cs
+C:\Users\Alexander Wood\source\repos\ClimbingShoebox\obj\Debug\netcoreapp3.1\Razor\Views\Shoe\ListShoes.cshtml.g.cs
