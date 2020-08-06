@@ -10,9 +10,6 @@ namespace ClimbingShoebox.Controllers
     public class ShoeController : Controller
     {
         private readonly IShoeRepository shoeRepository;
-        private readonly ICategoryRepository categoryRepository;
-        private readonly IBrandRepository brandRepository;
-        private readonly FavouritesCollection favouritesCollection;
         private readonly IServiceProvider services;
         private readonly IRatingEntryRepository ratingEntryRepository;
 
@@ -25,13 +22,10 @@ namespace ClimbingShoebox.Controllers
         }
 
         public ShoeController(IShoeRepository shoeRepository, ICategoryRepository categoryRepository,
-            IBrandRepository brandRepository, FavouritesCollection favouritesCollection, IServiceProvider services
+            IBrandRepository brandRepository, IServiceProvider services
             , IRatingEntryRepository ratingEntryRepository)
         {
             this.shoeRepository = shoeRepository;
-            this.categoryRepository = categoryRepository;
-            this.brandRepository = brandRepository;
-            this.favouritesCollection = favouritesCollection;
             this.services = services;
             this.ratingEntryRepository = ratingEntryRepository;
         }
@@ -243,7 +237,6 @@ namespace ClimbingShoebox.Controllers
         }
 
 
-
         public IActionResult ListSearchResults(string categoryOrBrand, string sortBy, string query)
         {
             IEnumerable<RatingEntry> ratingEntries = ratingEntryRepository.AllRatings;
@@ -284,69 +277,6 @@ namespace ClimbingShoebox.Controllers
                 return NotFound();
             }
             return View(shoe);
-        }
-
-
-        public IActionResult ListFavouriteShoes()
-        {
-            var items = favouritesCollection.GetCollectionItems(services);
-            favouritesCollection.FavouritesCollectionItems = items;
-            string message;
-
-            if (TempData.ContainsKey("favouritedMessage"))
-            {
-                message = TempData["favouritedMessage"].ToString();
-            }
-            else
-            {
-                message = null;
-            }
-
-
-            if (items == null)
-            {
-                return RedirectToAction("NoFavourites");
-            }
-            else
-            {
-                return View(new FavouritesCollectionViewModel
-                {
-                    FavouritesCollection = favouritesCollection,
-                    tempMessage = message
-                });
-            }
-
-        }
-
-        public IActionResult NoFavourites()
-        {
-            return View();
-        }
-
-
-        public IActionResult AddToFavourite(int shoeId)
-        {
-            favouritesCollection.AddToCollection(services, shoeId);
-
-            return RedirectToAction("ListFavouriteShoes");
-        }
-
-        public IActionResult RemoveFromFavourite(int shoeId)
-        {
-            favouritesCollection.RemoveFromCollection(services, shoeId);
-
-            TempData["favouritedMessage"] = "Shoes were removed from your favourites";
-
-            return RedirectToAction("ListFavouriteShoes");
-        }
-
-        public IActionResult AddCommentToFavourite(int favouriteCollectionItemId)
-        {
-            string comment = Request.Form["Comment"];
-
-            favouritesCollection.SaveComment(services, favouriteCollectionItemId, comment);
-
-            return RedirectToAction("ListFavouriteShoes");
         }
 
 
