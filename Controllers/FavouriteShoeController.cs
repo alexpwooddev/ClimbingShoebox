@@ -52,6 +52,7 @@ namespace ClimbingShoebox.Controllers
 
         }
 
+
         public IActionResult NoFavourites()
         {
             return View();
@@ -65,6 +66,7 @@ namespace ClimbingShoebox.Controllers
             return RedirectToAction(nameof(ListFavouriteShoes));
         }
 
+
         public IActionResult RemoveFromFavourite(int shoeId)
         {
             favouritesCollection.RemoveFromCollection(services, shoeId);
@@ -73,6 +75,7 @@ namespace ClimbingShoebox.Controllers
 
             return RedirectToAction(nameof(ListFavouriteShoes));
         }
+
 
         public IActionResult AddCommentToFavourite(int favouriteCollectionItemId)
         {

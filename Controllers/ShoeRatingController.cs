@@ -19,6 +19,7 @@ namespace ClimbingShoebox.Controllers
             this.services = services;
         }
 
+
         public IActionResult AddRatingEntry(string shoeId, string rating)
         {
             string referrer = Request.Headers["Referer"].ToString();

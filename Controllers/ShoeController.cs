@@ -181,56 +181,64 @@ namespace ClimbingShoebox.Controllers
             //category/Brand selected AND sort selected
             else
             {
-                var shoesInSelectedBrand = ratedShoes.Where(s => s.Shoe.Brand.BrandName == categoryOrBrand);
-                var shoesInSelectedCategory = ratedShoes.Where(s => s.Shoe.Category.CategoryName == categoryOrBrand);
-                SortBy sortByEnum = SortByStringToEnum(sortBy);
+                ratedShoes = CategoryOrBrandAndSortSelected(categoryOrBrand, ratedShoes, sortBy, matchCategoryInDb);
+            }
 
-                if (sortByEnum == SortBy.ascendingByPrice)
+            return ratedShoes;
+        }
+
+
+        private List<RatedShoe> CategoryOrBrandAndSortSelected(string categoryOrBrand, List<RatedShoe> ratedShoes, string sortBy, int? matchCategoryInDb)
+        {
+            var shoesInSelectedBrand = ratedShoes.Where(s => s.Shoe.Brand.BrandName == categoryOrBrand);
+            var shoesInSelectedCategory = ratedShoes.Where(s => s.Shoe.Category.CategoryName == categoryOrBrand);
+            SortBy sortByEnum = SortByStringToEnum(sortBy);
+
+            if (sortByEnum == SortBy.ascendingByPrice)
+            {
+                if (matchCategoryInDb == null)//i.e. this means that a brand was selected
                 {
-                    if (matchCategoryInDb == null)//i.e. this means that a brand was selected
-                    {
-                        ratedShoes = shoesInSelectedBrand.OrderBy(s => s.Shoe.Price).ToList();
-                    }
-                    else //i.e. this means a category was selected
-                    {
-                        ratedShoes = shoesInSelectedCategory.OrderBy(s => s.Shoe.Price).ToList();
-                    }
+                    ratedShoes = shoesInSelectedBrand.OrderBy(s => s.Shoe.Price).ToList();
                 }
-
-                else if (sortByEnum == SortBy.descendingByPrice)
+                else //i.e. this means a category was selected
                 {
-                    if (matchCategoryInDb == null)
-                    {
-                        ratedShoes = shoesInSelectedBrand.OrderByDescending(s => s.Shoe.Price).ToList();
-                    }
-                    else
-                    {
-                        ratedShoes = shoesInSelectedCategory.OrderByDescending(s => s.Shoe.Price).ToList();
-                    }
+                    ratedShoes = shoesInSelectedCategory.OrderBy(s => s.Shoe.Price).ToList();
                 }
+            }
 
-                else if (sortByEnum == SortBy.ascendingByRating)
+            else if (sortByEnum == SortBy.descendingByPrice)
+            {
+                if (matchCategoryInDb == null)
                 {
-                    if (matchCategoryInDb == null)
-                    {
-                        ratedShoes = shoesInSelectedBrand.OrderBy(s => s.OverallRating).ToList();
-                    }
-                    else
-                    {
-                        ratedShoes = shoesInSelectedCategory.OrderBy(s => s.OverallRating).ToList();
-                    }
+                    ratedShoes = shoesInSelectedBrand.OrderByDescending(s => s.Shoe.Price).ToList();
                 }
-
-                else //sortBy == descendingByRating
+                else
                 {
-                    if (matchCategoryInDb == null)
-                    {
-                        ratedShoes = shoesInSelectedBrand.OrderByDescending(s => s.OverallRating).ToList();
-                    }
-                    else
-                    {
-                        ratedShoes = shoesInSelectedCategory.OrderByDescending(s => s.OverallRating).ToList();
-                    }
+                    ratedShoes = shoesInSelectedCategory.OrderByDescending(s => s.Shoe.Price).ToList();
+                }
+            }
+
+            else if (sortByEnum == SortBy.ascendingByRating)
+            {
+                if (matchCategoryInDb == null)
+                {
+                    ratedShoes = shoesInSelectedBrand.OrderBy(s => s.OverallRating).ToList();
+                }
+                else
+                {
+                    ratedShoes = shoesInSelectedCategory.OrderBy(s => s.OverallRating).ToList();
+                }
+            }
+
+            else //sortBy == descendingByRating
+            {
+                if (matchCategoryInDb == null)
+                {
+                    ratedShoes = shoesInSelectedBrand.OrderByDescending(s => s.OverallRating).ToList();
+                }
+                else
+                {
+                    ratedShoes = shoesInSelectedCategory.OrderByDescending(s => s.OverallRating).ToList();
                 }
             }
 
@@ -279,9 +287,6 @@ namespace ClimbingShoebox.Controllers
             }
             return View(shoe);
         }
-
-
-        
 
     }
 }
