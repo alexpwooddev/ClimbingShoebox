@@ -22,12 +22,12 @@
             var currentStar = i;
             if (i <= Model.OverallRating)
             {
-                <a asp-controller="Shoe" asp-action="AddRatingEntry"
+                <a asp-controller="ShoeRating" asp-action="AddRatingEntry"
                    asp-all-route-data="data"><i class="fa fa-star"></i></a>
             }
             else
             {
-                <a asp-controller="Shoe" asp-action="AddRatingEntry"
+                <a asp-controller="ShoeRating" asp-action="AddRatingEntry"
                    asp-all-route-data="data"><i class="far fa-star"></i></a>
             }
         } @await Component.InvokeAsync("RatingCount", new { shoeId = Model.Shoe.ShoeId }) 

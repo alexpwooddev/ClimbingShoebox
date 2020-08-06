@@ -30,12 +30,12 @@ namespace ClimbingShoebox.Controllers
             this.ratingEntryRepository = ratingEntryRepository;
         }
 
-        
+
         public IActionResult ListShoes(string categoryOrBrand, string sortBy)
         {
             IEnumerable<RatingEntry> ratingEntries = ratingEntryRepository.AllRatings;
             List<RatedShoe> ratedShoes = new List<RatedShoe>();
-            ratedShoes = CreateRatedShoeList(shoeRepository.AllShoes, ratingEntries, ratedShoes).ToList();                   
+            ratedShoes = ShoeRatingController.CreateRatedShoeList(shoeRepository.AllShoes, ratingEntries, ratedShoes).ToList();                   
             
             bool NoCategoryOrBrandNorAscendingOrDescendingSelected = string.IsNullOrEmpty(categoryOrBrand) && string.IsNullOrEmpty(sortBy);
             bool AscendingOrDescendingButNoCategoryOrBrandSelected = string.IsNullOrEmpty(categoryOrBrand) && !string.IsNullOrEmpty(sortBy);
@@ -69,6 +69,7 @@ namespace ClimbingShoebox.Controllers
             }
             
         }
+
 
         private SortBy SortByStringToEnum(string sortBy)
         {
@@ -111,7 +112,7 @@ namespace ClimbingShoebox.Controllers
             }
 
             IEnumerable<Shoe> shoes = shoeRepository.GetShoesByNameOrBrandOrCategory(combinedQuery.Trim());
-            ratedShoes = CreateRatedShoeList(shoes, ratingEntries, ratedShoes).ToList();
+            ratedShoes = ShoeRatingController.CreateRatedShoeList(shoes, ratingEntries, ratedShoes).ToList();
 
             if (sortByEnum == SortBy.ascendingByPrice)
             {
@@ -246,7 +247,7 @@ namespace ClimbingShoebox.Controllers
             if (isInitialSearch)
             {
                 IEnumerable<Shoe> shoes = shoeRepository.GetShoesByNameOrBrandOrCategory(query);
-                ratedShoes = CreateRatedShoeList(shoes, ratingEntries, ratedShoes).ToList();
+                ratedShoes = ShoeRatingController.CreateRatedShoeList(shoes, ratingEntries, ratedShoes).ToList();
 
                 return View("ListSearchResults", new ShoesListViewModel
                 {
@@ -280,46 +281,7 @@ namespace ClimbingShoebox.Controllers
         }
 
 
-        public IActionResult AddRatingEntry(string shoeId, string rating)
-        {
-            string referrer = Request.Headers["Referer"].ToString();
-
-            int shoeIdInt = Int32.Parse(shoeId);
-            int ratingInt = Int32.Parse(rating);
-
-            bool shoeNotPreviouslyRated = ratingEntryRepository.AddShoeRating(services, shoeIdInt, ratingInt);
-            TempData["ratingSubmissionMessage"] = shoeNotPreviouslyRated ? "Thanks for your rating!" : "You can't rate the same shoes twice!";
-
-            return Redirect(referrer);
-        }
-
-
-        public static List<RatedShoe> CreateRatedShoeList(IEnumerable<Shoe> shoes, IEnumerable<RatingEntry> ratingEntries,
-            List<RatedShoe> ratedShoes)
-        {
-            foreach (var shoe in shoes)
-            {
-                IEnumerable<int> currentShoeRatings = ratingEntries.Where(e => e.ShoeId == shoe.ShoeId).Select(e => e.Rating);
-                double overallRating;
-
-                if (currentShoeRatings.Count() != 0)
-                {
-                    overallRating = currentShoeRatings.Sum() / currentShoeRatings.Count();
-                }
-                else
-                {
-                    overallRating = 5; //i.e. new shoes automatically get a 5
-                }
-
-                ratedShoes.Add(new RatedShoe
-                {
-                    OverallRating = overallRating,
-                    ShoeId = shoe.ShoeId,
-                    Shoe = shoe
-                });
-            }
-            return ratedShoes;
-        }
+        
 
     }
 }
