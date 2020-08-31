@@ -193,6 +193,14 @@ p, #email, #change-password, #two-factor, #profile
     height: auto;
 }
 
+.shoeCard-button-wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    grid-gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
 
 .carousel-image {
     width: 30vw;

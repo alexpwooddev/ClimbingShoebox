@@ -34,19 +34,15 @@
         <hr />
         <p class="card-text">@Model.Shoe.ShortDescription</p>
     </div>
-    <div>
-        <p class="btn">
+    <div class="shoeCard-button-wrapper">
             <a class="btn btn-primary"
                asp-controller="ShoppingCart"
                asp-action="AddToShoppingCart"
                asp-route-shoeId="@Model.Shoe.ShoeId">Add to cart</a>
-        </p>
-        <p class="btn">
             <a class="btn btn-primary"
                asp-controller="FavouriteShoe"
                asp-action="AddToFavourite"
                asp-route-shoeId="@Model.Shoe.ShoeId">Favourite this shoe!</a>
-        </p>
     </div>
 
 
