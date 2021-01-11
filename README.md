@@ -4,7 +4,7 @@ E-commerce site using **ASP.NET Core MVC, SQL Server and Bootstrap4**
 
 ![image](https://user-images.githubusercontent.com/65205646/104137006-7033ef00-53e5-11eb-978e-d48700137554.png)
 
-## Features developed by me:
+## Features
 - Product search 
 - Sort products by price and rating
 - "Add to favourites" (i.e. users can favourite a product and see a page presenting their favourited products)
